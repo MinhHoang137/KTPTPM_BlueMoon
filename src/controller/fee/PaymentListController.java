@@ -2,7 +2,6 @@ package controller.fee;
 
 import entity.fee.FeeItem;
 import entity.fee.Payment;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,8 +19,9 @@ import repository.fee.PaymentRepositoryImpl;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.List;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 
 public class PaymentListController {
 

@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -23,8 +22,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static javafx.application.Application.launch;
 
 public class FeeListController {
 
@@ -265,9 +262,9 @@ public class FeeListController {
         alert.setHeaderText("Thông tin khoản thu: " + feeItem.getTenKhoanThu());
         alert.setContentText(
                 "Tổng cần thu: " + tongCanThu + "\n" +
-                        "Đã thu: " + daThu + "\n" +
-                        "Còn thiếu: " + conThieu + "\n\n" +
-                        "Danh sách hộ:\n" + danhSachHo
+                "Đã thu: " + daThu + "\n" +
+                "Còn thiếu: " + conThieu + "\n\n" +
+                "Danh sách hộ:\n" + danhSachHo
         );
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
