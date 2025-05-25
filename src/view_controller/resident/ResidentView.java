@@ -62,6 +62,8 @@ public class ResidentView extends BaseView {
             // Tìm kiếm danh sách cư dân theo tên → hiển thị trên bảng
             List<Resident> result = ResidentController.getInstance().searchResidentsByName(keyword);
             tableResidents.setItems(FXCollections.observableArrayList(result));
+        } else{
+            refreshTable(); // Nếu không có từ khóa, làm mới bảng để hiển thị tất cả cư dân
         }
     }
 
@@ -75,6 +77,8 @@ public class ResidentView extends BaseView {
             } else {
                 tableResidents.setItems(FXCollections.observableArrayList()); // Trống nếu không tìm thấy
             }
+        } else{
+            refreshTable(); // Nếu không có từ khóa, làm mới bảng để hiển thị tất cả cư dân
         }
     }
 
