@@ -12,7 +12,6 @@ public class UserLoginModel {
         this.userLoginRepository = userLoginRepository;
     }
 
-    // Phương thức login trả về Optional<User> nếu tìm được user hợp lệ
     public Optional<User> login(String username, String password) {
         return userLoginRepository.login(username, password);
     }

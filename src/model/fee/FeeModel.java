@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import entity.fee.FeeItem;
 import entity.fee.Payment;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.Set;
 
 public class FeeModel {
     private FeeRepository feeRepository;
@@ -28,50 +26,50 @@ public class FeeModel {
         this.paymentRepository = paymentRepository;
     }
 
-    public List<FeeItem> getAllFees() {
+    public List<FeeItem> getAllFeeItems() {
         return feeRepository.findAll();
     }
 
-    public FeeItem getFeeById(int id) {
+    public FeeItem getFeeItemById(int id) {
         return feeRepository.findById(id);
     }
 
-    public void createFee(FeeItem feeItem) {
-        if (validateFee(feeItem)) {
+    public void createFeeItem(FeeItem feeItem) {
+        if (validateFeeItem(feeItem)) {
             feeRepository.save(feeItem);
         }
     }
 
-    public void updateFee(FeeItem feeItem) {
-        if (validateFee(feeItem)) {
+    public void updateFeeItem(FeeItem feeItem) {
+        if (validateFeeItem(feeItem)) {
             feeRepository.update(feeItem);
         }
     }
 
-    public void deleteFee(int id) {
+    public void deleteFeeItem(int id) {
         feeRepository.delete(id);
     }
 
-    public boolean validateFee(FeeItem feeItem) {
-        return feeItem.getSoTien() > 0 && feeItem.getTenKhoanThu() != null;
+    public boolean validateFeeItem(FeeItem feeItem) {
+        return feeItem.getAmount() > 0 && feeItem.getFeeName() != null;
     }
 
-    public double getTotalPaidForFee(int feeItemId) {
+    public double getTotalPaidForFeeItem(int feeItemId) throws Exception{
         if (paymentRepository == null) return 0;
         List<Payment> payments = paymentRepository.findByFeeItemId(feeItemId);
-        return payments.stream().mapToDouble(Payment::getSoTienNop).sum();
+        return payments.stream().mapToDouble(Payment::getAmountPaid).sum();
     }
 
-    public double getTotalExpectedForFee(int feeItemId) {
+    public double getTotalExpectedForFeeItem(int feeItemId) {
         FeeItem fee = feeRepository.findById(feeItemId);
-        return fee != null ? fee.getSoTien() * 10 : 0; // Giả định có 10 hộ
+        return fee != null ? fee.getAmount() * 10 : 0;
     }
 
-    public double getTotalMissingForFee(int feeItemId) {
-        return getTotalExpectedForFee(feeItemId) - getTotalPaidForFee(feeItemId);
+    public double getTotalMissingForFeeItem(int feeItemId) throws Exception {
+        return getTotalExpectedForFeeItem(feeItemId) - getTotalPaidForFeeItem(feeItemId);
     }
 
-    public List<Integer> getPaidHouseholdsForFee(int feeItemId) {
+    public List<Integer> getPaidHouseholdsForFeeItem(int feeItemId) throws Exception{
         if (paymentRepository == null) return List.of();
 
         List<Payment> payments = paymentRepository.findByFeeItemId(feeItemId);
@@ -79,16 +77,15 @@ public class FeeModel {
 
         FeeItem fee = feeRepository.findById(feeItemId);
         if (fee == null) return List.of();
-        double soTienCanThu = fee.getSoTien();
+        double requiredAmount = fee.getAmount();
 
-        // Tính tổng mỗi hộ đã nộp bao nhiêu
-        Map<Integer, Double> tongTienHo = new HashMap<>();
+        Map<Integer, Double> householdTotalPaid = new HashMap<>();
         for (Payment p : payments) {
-            tongTienHo.put(p.getIdHousehold(), tongTienHo.getOrDefault(p.getIdHousehold(), 0.0) + p.getSoTienNop());
+            householdTotalPaid.put(p.getHouseholdId(), householdTotalPaid.getOrDefault(p.getHouseholdId(), 0.0) + p.getAmountPaid());
         }
 
-        for (var entry : tongTienHo.entrySet()) {
-            if (entry.getValue() >= soTienCanThu) {
+        for (var entry : householdTotalPaid.entrySet()) {
+            if (entry.getValue() >= requiredAmount) {
                 result.add(entry.getKey());
             }
         }
@@ -96,13 +93,13 @@ public class FeeModel {
         return new ArrayList<>(result);
     }
 
-    public List<Integer> getUnpaidHouseholdsForFee(int feeItemId) {
+    public List<Integer> getUnpaidHouseholdsForFeeItem(int feeItemId) throws Exception{
         Set<Integer> allHouseholds = new HashSet<>();
         for (int i = 1; i <= 10; i++) allHouseholds.add(i);
 
-        List<Integer> paid = getPaidHouseholdsForFee(feeItemId);
-        allHouseholds.removeAll(paid);
+        List<Integer> paidHouseholds = getPaidHouseholdsForFeeItem(feeItemId);
+        allHouseholds.removeAll(paidHouseholds);
 
         return new ArrayList<>(allHouseholds);
     }
-}  
+}

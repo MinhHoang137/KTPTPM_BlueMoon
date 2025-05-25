@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.vehicle.VehicleListController"
+            prefHeight="700.0" prefWidth="1000.0">
+
+    <VBox spacing="10" AnchorPane.topAnchor="15.0" AnchorPane.leftAnchor="15.0"
+          AnchorPane.rightAnchor="15.0" AnchorPane.bottomAnchor="15.0">
+
+        <!-- Tiêu đề -->
+        <Label text="Danh sách Xe cộ" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 5 0;"/>
+
+        <!-- Thanh tìm kiếm -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="tfSearch" promptText="Nhập Biển số hoặc ID xe" HBox.hgrow="ALWAYS" prefWidth="300"/>
+            <Button fx:id="btnSearchById" text="Tìm theo ID" onAction="#onSearchById"/>
+            <Button fx:id="btnSearchByLicensePlate" text="Tìm theo Biển số" onAction="#onSearchByLicensePlate"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnReload" text="Tải lại tất cả" onAction="#onReloadTable"/>
+        </HBox>
+
+        <!-- Bảng dữ liệu xe cộ -->
+        <TableView fx:id="vehicleTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+                <TableColumn fx:id="colOwnerPersonId" text="ID Chủ sở hữu" prefWidth="90"/>
+                <TableColumn fx:id="colBrand" text="Hãng xe" prefWidth="100"/>
+                <TableColumn fx:id="colModel" text="Mẫu xe" prefWidth="120"/>
+                <TableColumn fx:id="colLicensePlate" text="Biển số" prefWidth="100"/>
+                <TableColumn fx:id="colColor" text="Màu sắc" prefWidth="80"/>
+                <TableColumn fx:id="colImagePath" text="Đường dẫn ảnh" prefWidth="150"/>
+                <TableColumn fx:id="colCreatedAt" text="Ngày tạo" prefWidth="100"/>
+                <TableColumn fx:id="colUpdatedAt" text="Ngày cập nhật" prefWidth="100"/>
+                <TableColumn fx:id="colDetail" text="Chi tiết" prefWidth="80"/> <!-- Thêm cột chi tiết -->
+            </columns>
+            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+        </TableView>
+
+        <!-- Các nút thao tác -->
+        <HBox spacing="15" alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
+            <Button fx:id="btnAdd" text="Thêm mới" onAction="#onAdd"/>
+            <Button fx:id="btnUpdate" text="Cập nhật" onAction="#onUpdate"/>
+            <Button fx:id="btnDelete" text="Xóa" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

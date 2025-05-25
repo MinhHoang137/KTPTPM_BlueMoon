@@ -2,208 +2,184 @@ package repository.fee;
 
 import entity.fee.FeeItem;
 import entity.fee.Payment;
+import model.BaseModel;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PaymentRepositoryImpl implements PaymentRepository {
+public class PaymentRepositoryImpl extends BaseModel implements PaymentRepository {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chungcu_bluemoon?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "2bon0bon";
+    private FeeRepository feeRepository;
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public PaymentRepositoryImpl(FeeRepository feeRepository) {
+        super();
+        this.feeRepository = feeRepository;
     }
 
     private Payment extractPayment(ResultSet rs) throws SQLException {
         Payment payment = new Payment();
-        FeeItem feeItem = new FeeItem();
-
         payment.setId(rs.getInt("id"));
-        payment.setIdHousehold(rs.getInt("id_household"));
-        payment.setSoTienNop(rs.getDouble("so_tien_nop"));
-        payment.setNgayNop(rs.getDate("ngay_nop"));
-        payment.setTrangThai(rs.getString("trang_thai"));
+        payment.setHouseholdId(rs.getInt("household_id"));
+        int feeItemId = rs.getInt("fee_item_id");
+        payment.setAmountPaid(rs.getDouble("amount_paid"));
+        payment.setPaymentDate(rs.getDate("payment_date"));
+        payment.setStatus(rs.getString("status"));
+        payment.setCreatedAt(rs.getTimestamp("created_at"));
+        payment.setUpdatedAt(rs.getTimestamp("updated_at"));
 
-        feeItem.setId(rs.getInt("fee_item_id"));
+        FeeItem feeItem = null;
+        try {
+            feeItem = feeRepository.findById(feeItemId);
+        } catch (Exception e) {
+            System.err.println("Lỗi khi tải FeeItem cho Payment ID " + payment.getId() + ": " + e.getMessage());
+            // In stack trace hoặc xử lý lỗi loading FeeItem cho Payment nếu cần
+            // e.printStackTrace(); 
+        }
         payment.setFeeItem(feeItem);
 
         return payment;
     }
 
     @Override
-    public List<Payment> findAll() {
-        List<Payment> list = new ArrayList<>();
-        String sql = "SELECT * FROM payments";
-
-        try (Connection conn = getConnection();
+    public List<Payment> findAll() throws SQLException {
+        String sql = "SELECT id, household_id, fee_item_id, amount_paid, payment_date, status, created_at, updated_at FROM payments";
+        try (Connection conn = getConnection(); // getConnection() giờ ném SQLException
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+            List<Payment> payments = new ArrayList<>();
             while (rs.next()) {
-                list.add(extractPayment(rs));
+                payments.add(extractPayment(rs));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return payments;
+        } finally {
+            closeConnection();
         }
-        return list;
     }
 
     @Override
-    public Payment findById(int id) {
-        String sql = "SELECT * FROM payments WHERE id = ?";
+    public Payment findById(int id) throws SQLException {
+        String sql = "SELECT id, household_id, fee_item_id, amount_paid, payment_date, status, created_at, updated_at FROM payments WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return extractPayment(rs);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if (rs.next()) {
+                return extractPayment(rs);
+            }
+        } finally {
+            closeConnection();
         }
         return null;
     }
 
     @Override
-    public void save(Payment payment) {
-        String sql = "INSERT INTO payments (id_household, so_tien_nop, fee_item_id, ngay_nop, trang_thai) VALUES (?, ?, ?, ?, ?)";
-
+    public boolean save(Payment payment) throws SQLException {
+        String sql = "INSERT INTO payments (household_id, fee_item_id, amount_paid, payment_date, status) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, payment.getIdHousehold());
-            stmt.setDouble(2, payment.getSoTienNop());
-            stmt.setInt(3, payment.getFeeItem().getId());
-            stmt.setDate(4, new java.sql.Date(payment.getNgayNop().getTime()));
-            stmt.setString(5, payment.getTrangThai());
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, payment.getHouseholdId());
+            stmt.setInt(2, payment.getFeeItem().getId());
+            stmt.setDouble(3, payment.getAmountPaid());
+            stmt.setDate(4, payment.getPaymentDate() != null ? new java.sql.Date(payment.getPaymentDate().getTime()) : null);
+            stmt.setString(5, payment.getStatus());
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                return false;
+            }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    payment.setId(generatedKeys.getInt(1));
+                }
+            }
+            return true;
+        } finally {
+            closeConnection();
         }
     }
 
     @Override
-    public void update(Payment payment) {
-        String sql = "UPDATE payments SET id_household = ?, so_tien_nop = ?, fee_item_id = ?, ngay_nop = ?, trang_thai = ? WHERE id = ?";
-
+    public boolean update(Payment payment) throws SQLException {
+        String sql = "UPDATE payments SET household_id = ?, fee_item_id = ?, amount_paid = ?, payment_date = ?, status = ? WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, payment.getIdHousehold());
-            stmt.setDouble(2, payment.getSoTienNop());
-            stmt.setInt(3, payment.getFeeItem().getId());
-            stmt.setDate(4, new java.sql.Date(payment.getNgayNop().getTime()));
-            stmt.setString(5, payment.getTrangThai());
+            stmt.setInt(1, payment.getHouseholdId());
+            stmt.setInt(2, payment.getFeeItem().getId());
+            stmt.setDouble(3, payment.getAmountPaid());
+            stmt.setDate(4, payment.getPaymentDate() != null ? new java.sql.Date(payment.getPaymentDate().getTime()) : null);
+            stmt.setString(5, payment.getStatus());
             stmt.setInt(6, payment.getId());
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return stmt.executeUpdate() > 0;
+        } finally {
+            closeConnection();
         }
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) throws SQLException {
         String sql = "DELETE FROM payments WHERE id = ?";
-
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return stmt.executeUpdate() > 0;
+        } finally {
+            closeConnection();
         }
     }
 
     @Override
-    public List<Payment> findByHouseholdId(int householdId) {
-        List<Payment> list = new ArrayList<>();
-        String sql = "SELECT * FROM payments WHERE id_household = ?";
-
+    public List<Payment> findByHouseholdId(int householdId) throws SQLException {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT id, household_id, fee_item_id, amount_paid, payment_date, status, created_at, updated_at FROM payments WHERE household_id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, householdId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                list.add(extractPayment(rs));
+                payments.add(extractPayment(rs));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-        return list;
+        return payments;
     }
 
     @Override
-    public List<Payment> findByFeeItemId(int feeItemId) {
-        List<Payment> list = new ArrayList<>();
-        String sql = "SELECT * FROM payments WHERE fee_item_id = ?";
-
+    public List<Payment> findByFeeItemId(int feeItemId) throws SQLException {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT id, household_id, fee_item_id, amount_paid, payment_date, status, created_at, updated_at FROM payments WHERE fee_item_id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, feeItemId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                list.add(extractPayment(rs));
+                payments.add(extractPayment(rs));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-        return list;
+        return payments;
     }
 
     @Override
-    public List<Integer> findPaidHouseholdsByFeeItemId(int feeItemId) {
-        List<Integer> ids = new ArrayList<>();
-        String sql = "SELECT DISTINCT id_household FROM payments WHERE fee_item_id = ? AND trang_thai = 'Đã nộp'";
-
+    public double sumTotalPaidByFeeItemId(int feeItemId) throws SQLException {
+        String sql = "SELECT SUM(amount_paid) AS total FROM payments WHERE fee_item_id = ? AND status = 'Đã nộp'";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, feeItemId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                ids.add(rs.getInt("id_household"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ids;
-    }
-
-    @Override
-    public List<Integer> findUnpaidHouseholdsByFeeItemId(int feeItemId) {
-        // Tuỳ vào thiết kế DB có bảng "households" hay không, đoạn này là placeholder
-        // Để đơn giản, ta return empty list
-        return new ArrayList<>();
-    }
-
-    @Override
-    public double sumTotalPaidByFeeItemId(int feeItemId) {
-        String sql = "SELECT SUM(so_tien_nop) AS total FROM payments WHERE fee_item_id = ? AND trang_thai = 'Đã nộp'";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, feeItemId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getDouble("total");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return 0;
     }
 
     @Override
-    public int countUnpaidHouseholdsByFeeItemId(int feeItemId) {
-        // Tuỳ thiết kế bảng, có thể join households nếu có. Tạm thời trả về 0
+    public int countUnpaidHouseholdsByFeeItemId(int feeItemId) throws SQLException {
         return 0;
     }
 }

@@ -2,10 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.fee.FeeManagerController"
-            prefWidth="400" prefHeight="200">
-    <Button fx:id="btnFee" text="Quản lý Khoản thu" layoutX="100" layoutY="50" onAction="#onFeeClicked"/>
-    <Button fx:id="btnPayment" text="Quản lý Khoản nộp" layoutX="100" layoutY="100" onAction="#onPaymentClicked"/>
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.fee.FeeManagerController"
+      alignment="CENTER" spacing="30.0" prefWidth="750.0" prefHeight="700.0">
+      <!-- prefWidth/prefHeight ở đây là gợi ý kích thước cho VBox này,
+           thực tế nó sẽ được StackPane (trong HomePage.fxml) căn giữa và điều chỉnh -->
+
+    <Label text="Quản lý Phí Chung cư" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;"/>
+
+    <Button fx:id="btnManageFeeItems" text="Quản lý Khoản thu" prefWidth="250.0" prefHeight="70.0"
+            style="-fx-background-color: white; -fx-border-color: #2196F3; -fx-border-width: 2; -fx-background-radius: 5; -fx-border-radius: 5; -fx-font-size: 20px;"
+            onAction="#onManageFeeItemsClicked"/>
+    
+    <Button fx:id="btnManagePayments" text="Quản lý Khoản nộp" prefWidth="250.0" prefHeight="70.0"
+            style="-fx-background-color: #f4f4f4; -fx-background-radius: 5; -fx-border-radius: 5; -fx-font-size: 20px;"
+            onAction="#onManagePaymentsClicked"/>
+</VBox>

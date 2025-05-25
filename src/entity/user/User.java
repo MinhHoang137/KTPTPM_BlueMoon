@@ -6,8 +6,7 @@ public class User {
     private String password;
     private String role;
 
-    public User() {
-    }
+    public User() {}
 
     public User(int id, String username, String password, String role) {
         this.id = id;
@@ -47,10 +46,5 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{id=" + id + ", username='" + username + "', role='" + role + "'}";
     }
 }

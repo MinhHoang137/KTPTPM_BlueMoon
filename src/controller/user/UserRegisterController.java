@@ -30,18 +30,21 @@ public class UserRegisterController {
 
     @FXML
     public void initialize() {
-        // Khởi tạo model với repository thực thi
         userRegisterModel = new UserRegisterModel(new UserRegisterRepositoryImpl());
 
-        // Thêm 2 vai trò cố định vào ComboBox
         roleField.getItems().addAll("Quản trị", "Ban quản lý dân cư");
-        roleField.getSelectionModel().selectFirst(); // Chọn mặc định "admin"
+        roleField.getSelectionModel().selectFirst(); 
     }
 
     @FXML
     private void onRegisterClicked() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
+        System.out.println(password);
+        System.out.println(password);
+        System.out.println(password);
+        System.out.println(password);
+        System.out.println(password);
         String role = roleField.getValue();
 
         if (username.isEmpty() || password.isEmpty() || role == null || role.isEmpty()) {
@@ -58,11 +61,10 @@ public class UserRegisterController {
         boolean success = userRegisterModel.register(user);
         if (success) {
             showAlert("Đăng ký thành công người dùng: " + username);
-            // Chuyển về giao diện đăng nhập
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/view/user/userLogin.fxml"));
                 Parent root = loader.load();
-                Stage stage = (Stage) usernameField.getScene().getWindow(); // lấy stage hiện tại
+                Stage stage = (Stage) usernameField.getScene().getWindow(); 
                 stage.setScene(new Scene(root));
                 stage.setTitle("Đăng nhập");
                 stage.show();

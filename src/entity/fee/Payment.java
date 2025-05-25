@@ -4,43 +4,67 @@ import java.util.Date;
 
 public class Payment {
     private int id;
-    private int idHousehold;
-    private double soTienNop;
-    private FeeItem feeItem;
-    private Date ngayNop;
-    private String trangThai;
+    private int householdId;
+    private FeeItem feeItem; 
+    private double amountPaid;
+    private Date paymentDate;
+    private String status;
+    private Date createdAt;
+    private Date updatedAt;
 
     public Payment() {}
 
-    public Payment(int id, int idHousehold, double soTienNop, FeeItem feeItem, Date ngayNop, String trangThai) {
+    public Payment(int id, int householdId, double amountPaid, Date paymentDate, String status) {
         this.id = id;
-        this.idHousehold = idHousehold;
-        this.soTienNop = soTienNop;
+        this.householdId = householdId;
+        this.amountPaid = amountPaid;
+        this.paymentDate = paymentDate;
+        this.status = status;
+        this.feeItem = null; 
+    }
+
+
+    public Payment(int id, int householdId, FeeItem feeItem, double amountPaid, Date paymentDate, String status, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.householdId = householdId;
         this.feeItem = feeItem;
-        this.ngayNop = ngayNop;
-        this.trangThai = trangThai;
+        this.amountPaid = amountPaid;
+        this.paymentDate = paymentDate;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public int getIdHousehold() { return idHousehold; }
-    public void setIdHousehold(int idHousehold) { this.idHousehold = idHousehold; }
-
-    public double getSoTienNop() { return soTienNop; }
-    public void setSoTienNop(double soTienNop) { this.soTienNop = soTienNop; }
+    public int getHouseholdId() { return householdId; }
+    public void setHouseholdId(int householdId) { this.householdId = householdId; }
 
     public FeeItem getFeeItem() { return feeItem; }
     public void setFeeItem(FeeItem feeItem) { this.feeItem = feeItem; }
 
-    public Date getNgayNop() { return ngayNop; }
-    public void setNgayNop(Date ngayNop) { this.ngayNop = ngayNop; }
+    public int getFeeItemId() {
+        return (feeItem != null) ? feeItem.getId() : 0;
+    }
 
-    public String getTrangThai() { return trangThai; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+    public double getAmountPaid() { return amountPaid; }
+    public void setAmountPaid(double amountPaid) { this.amountPaid = amountPaid; }
 
-    public void payment() {
-        this.trangThai = "Đã nộp";
-        this.ngayNop = new Date();
+    public Date getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(Date paymentDate) { this.paymentDate = paymentDate; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public Date getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public Date getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
+
+    public void markAsPaid() {
+        this.status = "Paid";
+        this.paymentDate = new Date();
     }
 }

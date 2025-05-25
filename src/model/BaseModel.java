@@ -5,15 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public abstract class BaseModel {
-    protected String url = "jdbc:mysql://localhost:3306/chungcu_bluemoon"; // Tên database bạn tạo
-    protected String username = "root"; // Tên người dùng MySQL
-    protected String password = "Hoang!3070$"; // Mật khẩu MySQL
+    protected String url = "jdbc:mysql://localhost:3306/v1db"; 
+    protected String username = "root"; 
+    protected String password_db = "9012345";
     protected Connection connection = null;
-    protected Connection getConnection() {
+    protected Connection getConnection()  {
         try {
-            // Bắt buộc nạp driver nếu không dùng build tool như Maven hoặc chạy từ IDE
-            Class.forName("com.mysql.cj.jdbc.Driver"); // Hoặc com.mysql.jdbc.Driver với bản cũ
-            connection = DriverManager.getConnection(url, username, password);
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+            connection = DriverManager.getConnection(url, username, password_db);
             return connection;
         } catch (ClassNotFoundException e) {
             System.err.println("Không tìm thấy JDBC Driver. Kiểm tra thư viện mysql-connector-j.");

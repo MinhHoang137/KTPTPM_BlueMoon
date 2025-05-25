@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.ResidenceChangeReportController" prefWidth="1200" prefHeight="700">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <HBox spacing="15">
+                <Label text="Từ ngày:"/>
+                <DatePicker fx:id="dateFromPicker"/>
+                <Label text="Đến ngày:"/>
+                <DatePicker fx:id="dateToPicker"/>
+
+                <Label text="Loại biến động:"/>
+                <ComboBox fx:id="changeTypeComboBox" prefWidth="150"/>
+
+                <Button text="Lọc" onAction="#handleFilter"/>
+                <Button text="Xuất" onAction="#handleExport"/>
+            </HBox>
+
+            <TableView fx:id="tableView" prefHeight="600" prefWidth="1180">
+                <columns>
+                    <TableColumn fx:id="colHoTen" text="Họ tên" prefWidth="150"/>
+                    <TableColumn fx:id="colCCCD" text="CCCD" prefWidth="100"/>
+                    <TableColumn fx:id="colGioiTinh" text="Giới tính" prefWidth="80"/>
+                    <TableColumn fx:id="colNgaySinh" text="Ngày sinh" prefWidth="110"/>
+                    <TableColumn fx:id="colLoaiBienDong" text="Loại biến động" prefWidth="150"/>
+                    <TableColumn fx:id="colNgayBienDong" text="Ngày biến động" prefWidth="120"/>
+                    <TableColumn fx:id="colDiaChiCu" text="Địa chỉ cũ" prefWidth="180"/>
+                    <TableColumn fx:id="colDiaChiMoi" text="Địa chỉ mới" prefWidth="180"/>
+                    <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="100"/>
+                    <TableColumn fx:id="colGhiChu" text="Ghi chú" prefWidth="180"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </children>
+
+</AnchorPane>

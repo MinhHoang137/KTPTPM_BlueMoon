@@ -22,7 +22,6 @@ public class UserLoginController {
     @FXML
     private PasswordField passwordField;
 
-    // Khởi tạo repository
     private final UserLoginRepository userLoginRepository = new UserLoginRepositoryImpl();
 
     @FXML
@@ -35,7 +34,6 @@ public class UserLoginController {
             return;
         }
 
-        // Gọi repository để kiểm tra từ CSDL
         Optional<User> userOptional = userLoginRepository.login(username, password);
 
         if (userOptional.isPresent()) {

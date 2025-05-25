@@ -5,10 +5,8 @@ import entity.fee.Payment;
 import repository.fee.FeeRepository;
 import repository.fee.PaymentRepository;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public class PaymentModel {
     private PaymentRepository paymentRepository;
@@ -19,73 +17,133 @@ public class PaymentModel {
         this.feeRepository = feeRepository;
     }
 
-    public List<Payment> getAllPayment() {
-        return paymentRepository.findAll();
-    }
-
-    public List<Payment> getPaymentById(int id) {
-        return List.of(paymentRepository.findById(id));
-    }
-
-    public void createPayment(Payment payment) {
-        paymentRepository.save(payment);
-        updateAllPaymentStatusForFee(payment.getFeeItem().getId());
-    }
-
-    public void updatePayment(Payment payment) {
-        paymentRepository.update(payment);
-        updateAllPaymentStatusForFee(payment.getFeeItem().getId());
-    }
-
-    public boolean validatePayment(Payment payment) {
-        return payment.getSoTienNop() > 0 && payment.getFeeItem() != null;
-    }
-
-    public void deletePayment(int id) {
-        Payment payment = paymentRepository.findById(id);
-        int feeId = payment.getFeeItem() != null ? payment.getFeeItem().getId() : -1;
-        paymentRepository.delete(id);
-        if (feeId != -1) {
-            updateAllPaymentStatusForFee(feeId);
+    public List<Payment> getAllPayments() {
+        try {
+            return paymentRepository.findAll();
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tải tất cả khoản nộp: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public List<Integer> getPaidHouseholdsForFee(int feeItemId) {
-        return paymentRepository.findPaidHouseholdsByFeeItemId(feeItemId);
+    public Payment getPaymentById(int id) {
+        try {
+            return paymentRepository.findById(id);
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tìm khoản nộp theo ID: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void validatePaymentStatusForFeeItem(int feeItemId, double soTienThu) {
-        List<Payment> all = paymentRepository.findByFeeItemId(feeItemId);
-
-        Map<Integer, Double> householdToAmount = new HashMap<>();
-        for (Payment p : all) {
-            int ho = p.getIdHousehold();
-            householdToAmount.put(ho, householdToAmount.getOrDefault(ho, 0.0) + p.getSoTienNop());
+    public boolean createPayment(Payment payment) { // <<<< Sửa ở đây: Trả về boolean
+        if (payment.getHouseholdId() <= 0 || payment.getFeeItem() == null || payment.getFeeItem().getId() <= 0 || payment.getAmountPaid() < 0) {
+            System.err.println("Thông tin khoản nộp không hợp lệ: ID Hộ khẩu, ID Khoản thu, hoặc số tiền.");
+            return false;
         }
-
-        for (Payment p : all) {
-            int ho = p.getIdHousehold();
-            double tongNop = householdToAmount.get(ho);
-            String trangThai = (tongNop >= soTienThu) ? "Đã nộp" : "Thiếu";
-            p.setTrangThai(trangThai);
-
-            if (p.getNgayNop() == null) {
-                p.setNgayNop(new Date());
+        try {
+            boolean success = paymentRepository.save(payment);
+            if (success) {
+                // Chỉ cập nhật trạng thái nếu lưu thành công
+                updateAllPaymentStatusesForFeeItem(payment.getFeeItem().getId()); // Phương thức này cũng nên trả về boolean
             }
-
-            if (p.getFeeItem() == null || p.getFeeItem().getSoTien() == 0) {
-                FeeItem fullInfo = feeRepository.findById(feeItemId);
-                p.setFeeItem(fullInfo);
-            }
-
-            paymentRepository.update(p);
+            return success;
+        } catch (SQLException e) {
+            System.err.println("Lỗi CSDL khi thêm khoản nộp: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public void updateAllPaymentStatusForFee(int feeItemId) {
-        FeeItem item = feeRepository.findById(feeItemId);
-        if (item != null) {
-            validatePaymentStatusForFeeItem(feeItemId, item.getSoTien());
+    public boolean updatePayment(Payment payment) { // <<<< Sửa ở đây: Trả về boolean
+        if (payment.getId() <= 0 || payment.getHouseholdId() <= 0 || payment.getFeeItem() == null || payment.getFeeItem().getId() <= 0 || payment.getAmountPaid() < 0) {
+            System.err.println("ID hoặc thông tin khoản nộp không hợp lệ để cập nhật.");
+            return false;
+        }
+        try {
+            boolean success = paymentRepository.update(payment);
+            if (success) {
+                updateAllPaymentStatusesForFeeItem(payment.getFeeItem().getId());
+            }
+            return success;
+        } catch (SQLException e) {
+            System.err.println("Lỗi CSDL khi cập nhật khoản nộp: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deletePayment(int id) { // <<<< Sửa ở đây: Trả về boolean
+        if (id <= 0) {
+            System.err.println("ID khoản nộp không hợp lệ để xóa.");
+            return false;
+        }
+        try {
+            Payment paymentToDelete = paymentRepository.findById(id);
+            if (paymentToDelete == null) {
+                System.err.println("Không tìm thấy khoản nộp để xóa.");
+                return false;
+            }
+            boolean success = paymentRepository.delete(id);
+            if (success) {
+                // Sau khi xóa, cập nhật lại trạng thái các khoản nộp của khoản thu đó
+                updateAllPaymentStatusesForFeeItem(paymentToDelete.getFeeItem().getId());
+            }
+            return success;
+        } catch (SQLException e) {
+            System.err.println("Lỗi CSDL khi xóa khoản nộp: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Payment> getPaymentsByHouseholdId(int householdId) {
+        try {
+            return paymentRepository.findByHouseholdId(householdId);
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tìm khoản nộp theo ID Hộ khẩu: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Payment> getPaymentsByFeeItemId(int feeItemId) {
+        try {
+            return paymentRepository.findByFeeItemId(feeItemId);
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tìm khoản nộp theo ID Khoản thu: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean updateAllPaymentStatusesForFeeItem(int feeItemId) { // <<<< Sửa ở đây: Trả về boolean
+        try {
+            FeeItem item = feeRepository.findById(feeItemId);
+            if (item != null) {
+                List<Payment> paymentsForFeeItem = paymentRepository.findByFeeItemId(feeItemId);
+                double requiredAmount = item.getAmount();
+
+                for (Payment payment : paymentsForFeeItem) {
+                    if (payment.getAmountPaid() >= requiredAmount) {
+                        payment.setStatus("Đã nộp");
+                    } else if (payment.getAmountPaid() > 0) {
+                        payment.setStatus("Thiếu tiền");
+                    } else {
+                        payment.setStatus("Chưa nộp");
+                    }
+                    if (!paymentRepository.update(payment)) {
+                        System.err.println("Không thể cập nhật trạng thái cho Payment ID: " + payment.getId());
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Lỗi CSDL khi cập nhật trạng thái khoản nộp: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 }

@@ -5,21 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.fee.FeeItem;
+import model.BaseModel;
 
-public class FeeRepositoryImpl implements FeeRepository {
+public class FeeRepositoryImpl extends BaseModel implements FeeRepository {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/chungcu_bluemoon?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "2bon0bon"; 
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
 
     @Override
     public List<FeeItem> findAll() {
         List<FeeItem> feeItems = new ArrayList<>();
-        String sql = "SELECT * FROM fee_items";
+        String sql = "SELECT id, fee_name, amount, description, start_date, end_date, status, created_at, updated_at FROM fee_items";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -28,12 +23,14 @@ public class FeeRepositoryImpl implements FeeRepository {
             while (rs.next()) {
                 FeeItem item = new FeeItem();
                 item.setId(rs.getInt("id"));
-                item.setTenKhoanThu(rs.getString("ten_khoan_thu"));
-                item.setSoTien(rs.getDouble("so_tien"));
-                item.setMoTa(rs.getString("mo_ta"));
-                item.setNgayBatDau(rs.getDate("ngay_bat_dau"));
-                item.setNgayKetThuc(rs.getDate("ngay_ket_thuc"));
-                item.setTrangThai(rs.getString("trang_thai"));
+                item.setFeeName(rs.getString("fee_name"));
+                item.setAmount(rs.getDouble("amount"));
+                item.setDescription(rs.getString("description"));
+                item.setStartDate(rs.getDate("start_date"));
+                item.setEndDate(rs.getDate("end_date"));
+                item.setStatus(rs.getString("status"));
+                item.setCreatedAt(rs.getTimestamp("created_at"));
+                item.setUpdatedAt(rs.getTimestamp("updated_at"));
                 feeItems.add(item);
             }
 
@@ -46,7 +43,7 @@ public class FeeRepositoryImpl implements FeeRepository {
 
     @Override
     public FeeItem findById(int id) {
-        String sql = "SELECT * FROM fee_items WHERE id = ?";
+        String sql = "SELECT id, fee_name, amount, description, start_date, end_date, status, created_at, updated_at FROM fee_items WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -56,12 +53,14 @@ public class FeeRepositoryImpl implements FeeRepository {
             if (rs.next()) {
                 FeeItem item = new FeeItem();
                 item.setId(rs.getInt("id"));
-                item.setTenKhoanThu(rs.getString("ten_khoan_thu"));
-                item.setSoTien(rs.getDouble("so_tien"));
-                item.setMoTa(rs.getString("mo_ta"));
-                item.setNgayBatDau(rs.getDate("ngay_bat_dau"));
-                item.setNgayKetThuc(rs.getDate("ngay_ket_thuc"));
-                item.setTrangThai(rs.getString("trang_thai"));
+                item.setFeeName(rs.getString("fee_name"));
+                item.setAmount(rs.getDouble("amount"));
+                item.setDescription(rs.getString("description"));
+                item.setStartDate(rs.getDate("start_date"));
+                item.setEndDate(rs.getDate("end_date"));
+                item.setStatus(rs.getString("status"));
+                item.setCreatedAt(rs.getTimestamp("created_at"));
+                item.setUpdatedAt(rs.getTimestamp("updated_at"));
                 return item;
             }
 
@@ -74,18 +73,23 @@ public class FeeRepositoryImpl implements FeeRepository {
 
     @Override
     public void save(FeeItem feeItem) {
-        String sql = "INSERT INTO fee_items (ten_khoan_thu, so_tien, mo_ta, ngay_bat_dau, ngay_ket_thuc, trang_thai) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fee_items (fee_name, amount, description, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { // Thêm RETURN_GENERATED_KEYS để lấy ID tự động
 
-            stmt.setString(1, feeItem.getTenKhoanThu());
-            stmt.setDouble(2, feeItem.getSoTien());
-            stmt.setString(3, feeItem.getMoTa());
-            stmt.setDate(4, new java.sql.Date(feeItem.getNgayBatDau().getTime()));
-            stmt.setDate(5, new java.sql.Date(feeItem.getNgayKetThuc().getTime()));
-            stmt.setString(6, feeItem.getTrangThai());
+            stmt.setString(1, feeItem.getFeeName());
+            stmt.setDouble(2, feeItem.getAmount());
+            stmt.setString(3, feeItem.getDescription());
+            stmt.setDate(4, feeItem.getStartDate() != null ? new java.sql.Date(feeItem.getStartDate().getTime()) : null);
+            stmt.setDate(5, feeItem.getEndDate() != null ? new java.sql.Date(feeItem.getEndDate().getTime()) : null);
+            stmt.setString(6, feeItem.getStatus());
             stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                feeItem.setId(rs.getInt(1));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,17 +98,17 @@ public class FeeRepositoryImpl implements FeeRepository {
 
     @Override
     public void update(FeeItem feeItem) {
-        String sql = "UPDATE fee_items SET ten_khoan_thu = ?, so_tien = ?, mo_ta = ?, ngay_bat_dau = ?, ngay_ket_thuc = ?, trang_thai = ? WHERE id = ?";
+        String sql = "UPDATE fee_items SET fee_name = ?, amount = ?, description = ?, start_date = ?, end_date = ?, status = ? WHERE id = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, feeItem.getTenKhoanThu());
-            stmt.setDouble(2, feeItem.getSoTien());
-            stmt.setString(3, feeItem.getMoTa());
-            stmt.setDate(4, new java.sql.Date(feeItem.getNgayBatDau().getTime()));
-            stmt.setDate(5, new java.sql.Date(feeItem.getNgayKetThuc().getTime()));
-            stmt.setString(6, feeItem.getTrangThai());
+            stmt.setString(1, feeItem.getFeeName());
+            stmt.setDouble(2, feeItem.getAmount());
+            stmt.setString(3, feeItem.getDescription());
+            stmt.setDate(4, feeItem.getStartDate() != null ? new java.sql.Date(feeItem.getStartDate().getTime()) : null);
+            stmt.setDate(5, feeItem.getEndDate() != null ? new java.sql.Date(feeItem.getEndDate().getTime()) : null);
+            stmt.setString(6, feeItem.getStatus());
             stmt.setInt(7, feeItem.getId());
             stmt.executeUpdate();
 
