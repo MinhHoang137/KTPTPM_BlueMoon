@@ -286,8 +286,6 @@ public class FeeListController implements Initializable {
         result.ifPresent(item -> {
             boolean success = false; // Khởi tạo biến success
             try {
-                // Sửa lỗi: Lời gọi addFeeItem/updateFeeItem không ném FeeOperationException nữa,
-                // mà trả về boolean.
                 if (feeItemToEdit == null) {
                     success = true;
                     feeModel.createFeeItem(item); // Gán kết quả từ addFeeItem
@@ -302,7 +300,7 @@ public class FeeListController implements Initializable {
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Lỗi", (feeItemToEdit == null ? "Không thể thêm" : "Không thể cập nhật") + " khoản thu. Có thể tên khoản thu đã tồn tại hoặc lỗi CSDL.");
                 }
-            } catch (Exception e) { // Bắt Exception chung từ model (vì model đã xử lý SQLException nội bộ)
+            } catch (Exception e) { 
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể thực hiện thao tác: " + e.getMessage());
                 e.printStackTrace();
             }

@@ -76,7 +76,7 @@ public class FeeRepositoryImpl extends BaseModel implements FeeRepository {
         String sql = "INSERT INTO fee_items (fee_name, amount, description, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { // Thêm RETURN_GENERATED_KEYS để lấy ID tự động
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { 
 
             stmt.setString(1, feeItem.getFeeName());
             stmt.setDouble(2, feeItem.getAmount());
