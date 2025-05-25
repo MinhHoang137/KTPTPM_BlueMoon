@@ -22,7 +22,7 @@ public class FeeManagerController {
     @FXML
     public void onPaymentClicked() throws Exception {
         Stage stage = (Stage) btnPayment.getScene().getWindow();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/fee/payment_list.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/resources/view/fee/payment_list.fxml")));
         stage.setScene(scene);
         stage.setTitle("Quản lý khoản nộp");
     }

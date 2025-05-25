@@ -224,7 +224,7 @@ public class FeeListController {
     @FXML
     public void onBackClicked() throws IOException {
         Stage stage = (Stage) tableFeeList.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/fee/feeManager.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/fee/feeManager.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Quản lý phí chung cư");
     }
@@ -265,9 +265,9 @@ public class FeeListController {
         alert.setHeaderText("Thông tin khoản thu: " + feeItem.getTenKhoanThu());
         alert.setContentText(
                 "Tổng cần thu: " + tongCanThu + "\n" +
-                "Đã thu: " + daThu + "\n" +
-                "Còn thiếu: " + conThieu + "\n\n" +
-                "Danh sách hộ:\n" + danhSachHo
+                        "Đã thu: " + daThu + "\n" +
+                        "Còn thiếu: " + conThieu + "\n\n" +
+                        "Danh sách hộ:\n" + danhSachHo
         );
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
@@ -280,5 +280,3 @@ public class FeeListController {
         alert.showAndWait();
     }
 }
-
-

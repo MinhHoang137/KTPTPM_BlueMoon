@@ -2,6 +2,7 @@ package controller.fee;
 
 import entity.fee.FeeItem;
 import entity.fee.Payment;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.fee.PaymentModel;
@@ -36,28 +38,28 @@ public class PaymentListController {
     }
 
     private void setupTable() {
-//        TableColumn<Payment, Integer> colId = new TableColumn<>("ID");
-//        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-//
-//        TableColumn<Payment, Integer> colHo = new TableColumn<>("ID Hộ");
-//        colHo.setCellValueFactory(new PropertyValueFactory<>("idHousehold"));
-//
-//        TableColumn<Payment, Double> colSoTien = new TableColumn<>("Số tiền");
-//        colSoTien.setCellValueFactory(new PropertyValueFactory<>("soTienNop"));
-//
-//        TableColumn<Payment, Date> colNgayNop = new TableColumn<>("Ngày nộp");
-//        colNgayNop.setCellValueFactory(new PropertyValueFactory<>("ngayNop"));
-//
-//        TableColumn<Payment, String> colTrangThai = new TableColumn<>("Trạng thái");
-//        colTrangThai.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
-//
-//        TableColumn<Payment, Integer> colFeeId = new TableColumn<>("Khoản thu");
-//        colFeeId.setCellValueFactory(data -> {
-//            FeeItem feeItem = data.getValue().getFeeItem();
-//            return new ReadOnlyObjectWrapper<>(feeItem != null ? feeItem.getId() : 0);
-//        });
-//
-//        tablePayments.getColumns().addAll(colId, colHo, colSoTien, colNgayNop, colTrangThai, colFeeId);
+        TableColumn<Payment, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<Payment, Integer> colHo = new TableColumn<>("ID Hộ");
+        colHo.setCellValueFactory(new PropertyValueFactory<>("idHousehold"));
+
+        TableColumn<Payment, Double> colSoTien = new TableColumn<>("Số tiền");
+        colSoTien.setCellValueFactory(new PropertyValueFactory<>("soTienNop"));
+
+        TableColumn<Payment, Date> colNgayNop = new TableColumn<>("Ngày nộp");
+        colNgayNop.setCellValueFactory(new PropertyValueFactory<>("ngayNop"));
+
+        TableColumn<Payment, String> colTrangThai = new TableColumn<>("Trạng thái");
+        colTrangThai.setCellValueFactory(new PropertyValueFactory<>("trangThai"));
+
+        TableColumn<Payment, Integer> colFeeId = new TableColumn<>("Khoản thu");
+        colFeeId.setCellValueFactory(data -> {
+            FeeItem feeItem = data.getValue().getFeeItem();
+            return new ReadOnlyObjectWrapper<>(feeItem != null ? feeItem.getId() : 0);
+        });
+
+        tablePayments.getColumns().addAll(colId, colHo, colSoTien, colNgayNop, colTrangThai, colFeeId);
     }
 
     private void reloadTable() {
@@ -184,7 +186,7 @@ public class PaymentListController {
     @FXML
     public void onBackClicked() throws IOException {
         Stage stage = (Stage) tablePayments.getScene().getWindow();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/fee/feeManager.fxml")));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/fee/feeManager.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Quản lý phí chung cư");
     }
