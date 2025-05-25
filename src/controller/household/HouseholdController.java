@@ -35,7 +35,7 @@ public class HouseholdController {
         try {
             Household household = new Household(householdNumber, registrationDate, ownerId);
             //System.out.println("Thêm hộ gia đình thành công.");
-            return true;
+            return HouseholdModel.getInstance().insertHousehold(household) != 0;
         } catch (Exception e) {
             System.out.println("Lỗi khi thêm hộ gia đình: " + e.getMessage());
         }
@@ -61,7 +61,7 @@ public class HouseholdController {
         }
         try {
             Household household = new Household(householdNumber, registrationDate, ownerId);
-            return household.update();
+            return HouseholdModel.getInstance().updateHousehold(household);
         } catch (Exception e) {
             System.out.println("Lỗi khi cập nhật hộ gia đình: " + e.getMessage());
         }
@@ -77,7 +77,7 @@ public class HouseholdController {
         try {
             Household household = HouseholdModel.getInstance().getHouseholdByNumber(householdNumber);
             if (household != null) {
-                return household.delete();
+                return HouseholdModel.getInstance().deleteHousehold(household.getId());
             } else {
                 System.out.println("Hộ gia đình không tồn tại.");
             }

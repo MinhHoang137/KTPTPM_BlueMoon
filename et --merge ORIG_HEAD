@@ -1,0 +1,20 @@
+[33mc1021fa[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/refactor_v1[m[33m, [m[1;32mrefactor_v1[m[33m)[m HEAD@{0}: checkout: moving from main to main
+[33mc1021fa[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/refactor_v1[m[33m, [m[1;32mrefactor_v1[m[33m)[m HEAD@{1}: pull origin refactor_v1: Fast-forward
+[33mfbd4a94[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{2}: checkout: moving from refactor_v1 to main
+[33mc1021fa[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/refactor_v1[m[33m, [m[1;32mrefactor_v1[m[33m)[m HEAD@{3}: checkout: moving from main to refactor_v1
+[33mfbd4a94[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{4}: checkout: moving from main to main
+[33mfbd4a94[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{5}: commit (merge): dan cu, ho khau
+[33mb1ea66c[m HEAD@{6}: commit (merge): dan cu ho khau
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{7}: reset: moving to HEAD
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{8}: reset: moving to HEAD
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{9}: checkout: moving from fix-resident-household to main
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{10}: checkout: moving from main to fix-resident-household
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{11}: checkout: moving from Resident_Household to main
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{12}: checkout: moving from main to Resident_Household
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{13}: merge Resident_Household: Fast-forward
+[33m59438c0[m HEAD@{14}: checkout: moving from Resident_Household to main
+[33mdbbdb99[m[33m ([m[1;31morigin/fix-resident-household[m[33m, [m[1;31morigin/Resident_Household[m[33m, [m[1;32mfix-resident-household[m[33m, [m[1;32mResident_Household[m[33m)[m HEAD@{15}: commit: commit de merge
+[33m59438c0[m HEAD@{16}: checkout: moving from main to Resident_Household
+[33m59438c0[m HEAD@{17}: checkout: moving from Resident_Household to main
+[33m59438c0[m HEAD@{18}: checkout: moving from main to Resident_Household
+[33m59438c0[m HEAD@{19}: commit (initial): Dan cu, ho khau
