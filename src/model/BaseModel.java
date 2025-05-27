@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public abstract class BaseModel {
     protected String url = "jdbc:mysql://localhost:3306/v1db"; 
     protected String username = "root"; 
-    protected String password_db = "2bon0bon";
+    protected String password_db = "9012345";
     protected Connection connection = null;
     protected Connection getConnection()  {
         try {

@@ -9,11 +9,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
 import model.fee.FeeModel;
 import model.fee.PaymentModel;
 import repository.fee.FeeRepositoryImpl;
@@ -32,14 +42,17 @@ import java.util.ResourceBundle;
 public class PaymentListController implements Initializable {
 
     @FXML private TableView<Payment> tablePayments;
+
     @FXML private TextField tfSearch;
     @FXML private Button btnSearchByHouseholdId;
     @FXML private Button btnSearchByFeeItemId;
     @FXML private Button btnReload;
+
     @FXML private Button btnAdd;
     @FXML private Button btnUpdate;
     @FXML private Button btnDelete;
     @FXML private Button btnBack;
+
     @FXML private TableColumn<Payment, Integer> colId;
     @FXML private TableColumn<Payment, Integer> colHouseholdId;
     @FXML private TableColumn<Payment, Integer> colFeeItemId;
@@ -51,6 +64,7 @@ public class PaymentListController implements Initializable {
     private PaymentModel paymentModel;
     private FeeModel feeModel;
     private HomePageController homePageController;
+
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public void setHomePageController(HomePageController homePageController) {
@@ -90,7 +104,6 @@ public class PaymentListController implements Initializable {
                     showPaymentDetailDialog(item);
                 });
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -140,8 +153,8 @@ public class PaymentListController implements Initializable {
 
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            boolean success = paymentModel.deletePayment(selected.getId());
-            if (success) {
+            boolean success = paymentModel.deletePayment(selected.getId()); // Gán kết quả vào biến 'success'
+            if (success) { // Kiểm tra biến 'success'
                 reloadTable();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã xóa khoản nộp.");
             } else {
@@ -161,7 +174,8 @@ public class PaymentListController implements Initializable {
             int householdId = Integer.parseInt(idText);
             List<Payment> payments = paymentModel.getPaymentsByHouseholdId(householdId);
             if (payments != null && !payments.isEmpty()) {
-                tablePayments.setItems(FXCollections.observableArrayList(payments));
+                ObservableList<Payment> data = FXCollections.observableArrayList(payments);
+                tablePayments.setItems(data);
             } else {
                 tablePayments.getItems().clear();
                 showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Không tìm thấy khoản nộp cho hộ khẩu ID: " + householdId);
@@ -182,7 +196,8 @@ public class PaymentListController implements Initializable {
             int feeItemId = Integer.parseInt(idText);
             List<Payment> payments = paymentModel.getPaymentsByFeeItemId(feeItemId);
             if (payments != null && !payments.isEmpty()) {
-                tablePayments.setItems(FXCollections.observableArrayList(payments));
+                ObservableList<Payment> data = FXCollections.observableArrayList(payments);
+                tablePayments.setItems(data);
             } else {
                 tablePayments.getItems().clear();
                 showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Không tìm thấy khoản nộp cho khoản thu ID: " + feeItemId);
@@ -195,12 +210,12 @@ public class PaymentListController implements Initializable {
     @FXML
     public void onBackClicked() {
         if (homePageController != null) {
-            homePageController.loadContentIntoCenter("/resources/view/fee/feeManager.fxml");
+            homePageController.loadContentIntoCenter("/resources/view/fee/FeeManager.fxml");
         } else {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể quay lại: HomePageController không được thiết lập.");
             Stage stage = (Stage) btnBack.getScene().getWindow();
             if (stage != null) {
-                stage.close();
+                 stage.close();
             }
         }
     }
@@ -210,8 +225,7 @@ public class PaymentListController implements Initializable {
         dialog.setTitle(paymentToEdit == null ? "Thêm Khoản nộp mới" : "Sửa Khoản nộp");
 
         GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setHgap(10); grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField tfHouseholdId = new TextField();
@@ -225,33 +239,22 @@ public class PaymentListController implements Initializable {
             tfFeeItemId.setText(String.valueOf(paymentToEdit.getFeeItem().getId()));
             tfAmountPaid.setText(String.valueOf(paymentToEdit.getAmountPaid()));
             if (paymentToEdit.getPaymentDate() != null) {
-                Date date = paymentToEdit.getPaymentDate();
-                if (date instanceof java.sql.Date) {
-                    dpPaymentDate.setValue(((java.sql.Date) date).toLocalDate());
-                } else {
-                    dpPaymentDate.setValue(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                }
+                dpPaymentDate.setValue(paymentToEdit.getPaymentDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             }
             tfStatus.setText(paymentToEdit.getStatus());
-            tfHouseholdId.setEditable(false);
-            tfHouseholdId.setDisable(true);
-            tfFeeItemId.setEditable(false);
-            tfFeeItemId.setDisable(true);
+
+            tfHouseholdId.setEditable(false); tfHouseholdId.setDisable(true);
+            tfFeeItemId.setEditable(false); tfFeeItemId.setDisable(true);
         } else {
             dpPaymentDate.setValue(LocalDate.now());
             tfStatus.setText("Chưa nộp");
         }
 
-        grid.add(new Label("ID Hộ khẩu:"), 0, 0);
-        grid.add(tfHouseholdId, 1, 0);
-        grid.add(new Label("ID Khoản thu:"), 0, 1);
-        grid.add(tfFeeItemId, 1, 1);
-        grid.add(new Label("Số tiền nộp:"), 0, 2);
-        grid.add(tfAmountPaid, 1, 2);
-        grid.add(new Label("Ngày nộp:"), 0, 3);
-        grid.add(dpPaymentDate, 1, 3);
-        grid.add(new Label("Trạng thái:"), 0, 4);
-        grid.add(tfStatus, 1, 4);
+        grid.add(new Label("ID Hộ khẩu:"), 0, 0); grid.add(tfHouseholdId, 1, 0);
+        grid.add(new Label("ID Khoản thu:"), 0, 1); grid.add(tfFeeItemId, 1, 1);
+        grid.add(new Label("Số tiền nộp:"), 0, 2); grid.add(tfAmountPaid, 1, 2);
+        grid.add(new Label("Ngày nộp:"), 0, 3);    grid.add(dpPaymentDate, 1, 3);
+        grid.add(new Label("Trạng thái:"), 0, 4);   grid.add(tfStatus, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -262,7 +265,9 @@ public class PaymentListController implements Initializable {
                     Payment resultPayment = (paymentToEdit != null) ? paymentToEdit : new Payment();
                     resultPayment.setHouseholdId(Integer.parseInt(tfHouseholdId.getText().trim()));
                     resultPayment.setAmountPaid(Double.parseDouble(tfAmountPaid.getText().trim()));
+                    
                     resultPayment.setPaymentDate(Date.from(dpPaymentDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    
                     resultPayment.setStatus(tfStatus.getText());
 
                     FeeItem feeItem = feeModel.getFeeItemById(Integer.parseInt(tfFeeItemId.getText().trim()));
@@ -271,6 +276,7 @@ public class PaymentListController implements Initializable {
                         return null;
                     }
                     resultPayment.setFeeItem(feeItem);
+
                     return resultPayment;
                 } catch (NumberFormatException e) {
                     showAlert(Alert.AlertType.ERROR, "Lỗi nhập liệu", "ID hoặc số tiền không hợp lệ.");
@@ -283,14 +289,18 @@ public class PaymentListController implements Initializable {
 
         Optional<Payment> result = dialog.showAndWait();
         result.ifPresent(item -> {
-            boolean success = (paymentToEdit == null)
-                    ? paymentModel.createPayment(item)
-                    : paymentModel.updatePayment(item);
-            if (success) {
+            boolean success; // Khai báo biến success
+            if (paymentToEdit == null) { // Chế độ thêm
+                success = paymentModel.createPayment(item); // Gán kết quả
+            } else { // Chế độ sửa
+                success = paymentModel.updatePayment(item); // Gán kết quả
+            }
+            
+            if (success) { // Kiểm tra biến success
                 reloadTable();
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", (paymentToEdit == null ? "Đã thêm" : "Đã cập nhật") + " khoản nộp.");
             } else {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", (paymentToEdit == null ? "Không thể thêm" : "Không thể cập nhật") + " khoản nộp.");
+                showAlert(Alert.AlertType.ERROR, "Lỗi", (paymentToEdit == null ? "Không thể thêm" : "Không thể cập nhật") + " khoản nộp. Kiểm tra thông tin hoặc lỗi CSDL.");
             }
         });
     }
@@ -303,12 +313,12 @@ public class PaymentListController implements Initializable {
         String feeItemName = (payment.getFeeItem() != null) ? payment.getFeeItem().getFeeName() : "Không xác định";
 
         String details = "ID: " + payment.getId() + "\n" +
-                "ID Hộ khẩu: " + payment.getHouseholdId() + "\n" +
-                "Khoản thu: " + feeItemName + " (ID: " + payment.getFeeItem().getId() + ")\n" +
-                "Số tiền nộp: " + payment.getAmountPaid() + "\n" +
-                "Ngày nộp: " + (payment.getPaymentDate() != null ? dateFormat.format(payment.getPaymentDate()) : "Chưa nộp") + "\n" +
-                "Trạng thái: " + payment.getStatus();
-
+                         "ID Hộ khẩu: " + payment.getHouseholdId() + "\n" +
+                         "Khoản thu: " + feeItemName + " (ID: " + payment.getFeeItem().getId() + ")\n" +
+                         "Số tiền nộp: " + payment.getAmountPaid() + "\n" +
+                         "Ngày nộp: " + (payment.getPaymentDate() != null ? dateFormat.format(payment.getPaymentDate()) : "Chưa nộp") + "\n" +
+                         "Trạng thái: " + payment.getStatus();
+        
         alert.setContentText(details);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();

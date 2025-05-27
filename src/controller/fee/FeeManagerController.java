@@ -29,12 +29,13 @@ public class FeeManagerController {
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
+        // Có thể thiết lập trạng thái ban đầu hoặc tùy chỉnh UI ở đây
     }
 
     @FXML
     private void onManageFeeItemsClicked(ActionEvent event) {
         if (homePageController != null) {
-            homePageController.loadContentIntoCenter("/resources/view/fee/feeList.fxml");
+            homePageController.loadContentIntoCenter("/resources/view/fee/FeeList.fxml");
         } else {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải trang: Controller không được thiết lập đúng.");
         }
@@ -43,7 +44,7 @@ public class FeeManagerController {
     @FXML
     private void onManagePaymentsClicked(ActionEvent event) {
         if (homePageController != null) {
-            homePageController.loadContentIntoCenter("/resources/view/fee/paymentList.fxml");
+            homePageController.loadContentIntoCenter("/resources/view/fee/PaymentList.fxml");
         } else {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể tải trang: Controller không được thiết lập đúng.");
         }

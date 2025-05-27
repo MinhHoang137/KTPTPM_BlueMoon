@@ -35,7 +35,9 @@
                 <TableColumn fx:id="colEndDate" text="Ngày kết thúc" prefWidth="100"/>
                 <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="80"/>
                 <TableColumn fx:id="colDetail" text="Chi tiết" prefWidth="80"/>
-                
+                <!-- Nếu bạn có thêm cột created_at, updated_at trong entity và DB, hãy thêm vào đây -->
+                <!-- <TableColumn fx:id="colCreatedAt" text="Ngày tạo" prefWidth="100"/> -->
+                <!-- <TableColumn fx:id="colUpdatedAt" text="Ngày cập nhật" prefWidth="100"/> -->
             </columns>
             <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
         </TableView>

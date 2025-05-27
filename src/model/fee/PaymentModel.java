@@ -37,7 +37,7 @@ public class PaymentModel {
         }
     }
 
-    public boolean createPayment(Payment payment) { 
+    public boolean createPayment(Payment payment) { // <<<< Sửa ở đây: Trả về boolean
         if (payment.getHouseholdId() <= 0 || payment.getFeeItem() == null || payment.getFeeItem().getId() <= 0 || payment.getAmountPaid() < 0) {
             System.err.println("Thông tin khoản nộp không hợp lệ: ID Hộ khẩu, ID Khoản thu, hoặc số tiền.");
             return false;
@@ -45,8 +45,8 @@ public class PaymentModel {
         try {
             boolean success = paymentRepository.save(payment);
             if (success) {
-                
-                updateAllPaymentStatusesForFeeItem(payment.getFeeItem().getId()); 
+                // Chỉ cập nhật trạng thái nếu lưu thành công
+                updateAllPaymentStatusesForFeeItem(payment.getFeeItem().getId()); // Phương thức này cũng nên trả về boolean
             }
             return success;
         } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class PaymentModel {
         }
     }
 
-    public boolean updatePayment(Payment payment) { 
+    public boolean updatePayment(Payment payment) { // <<<< Sửa ở đây: Trả về boolean
         if (payment.getId() <= 0 || payment.getHouseholdId() <= 0 || payment.getFeeItem() == null || payment.getFeeItem().getId() <= 0 || payment.getAmountPaid() < 0) {
             System.err.println("ID hoặc thông tin khoản nộp không hợp lệ để cập nhật.");
             return false;
@@ -74,7 +74,7 @@ public class PaymentModel {
         }
     }
 
-    public boolean deletePayment(int id) { 
+    public boolean deletePayment(int id) { // <<<< Sửa ở đây: Trả về boolean
         if (id <= 0) {
             System.err.println("ID khoản nộp không hợp lệ để xóa.");
             return false;
@@ -87,6 +87,7 @@ public class PaymentModel {
             }
             boolean success = paymentRepository.delete(id);
             if (success) {
+                // Sau khi xóa, cập nhật lại trạng thái các khoản nộp của khoản thu đó
                 updateAllPaymentStatusesForFeeItem(paymentToDelete.getFeeItem().getId());
             }
             return success;
@@ -117,7 +118,7 @@ public class PaymentModel {
         }
     }
 
-    public boolean updateAllPaymentStatusesForFeeItem(int feeItemId) { 
+    public boolean updateAllPaymentStatusesForFeeItem(int feeItemId) { // <<<< Sửa ở đây: Trả về boolean
         try {
             FeeItem item = feeRepository.findById(feeItemId);
             if (item != null) {

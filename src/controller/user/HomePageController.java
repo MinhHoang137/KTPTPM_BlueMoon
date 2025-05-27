@@ -35,7 +35,7 @@ public class HomePageController {
     }
 
     public void onFeeClicked(ActionEvent event) {
-        loadContentIntoCenter("/resources/view/fee/feeManager.fxml");
+        loadContentIntoCenter("/resources/view/fee/FeeManager.fxml");
     }
 
     public void onReportClicked(ActionEvent event) {

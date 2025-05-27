@@ -8,7 +8,8 @@
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.fee.FeeManagerController"
       alignment="CENTER" spacing="30.0" prefWidth="750.0" prefHeight="700.0">
-      
+      <!-- prefWidth/prefHeight ở đây là gợi ý kích thước cho VBox này,
+           thực tế nó sẽ được StackPane (trong HomePage.fxml) căn giữa và điều chỉnh -->
 
     <Label text="Quản lý Phí Chung cư" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;"/>
 

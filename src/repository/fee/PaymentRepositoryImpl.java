@@ -34,7 +34,8 @@ public class PaymentRepositoryImpl extends BaseModel implements PaymentRepositor
             feeItem = feeRepository.findById(feeItemId);
         } catch (Exception e) {
             System.err.println("Lỗi khi tải FeeItem cho Payment ID " + payment.getId() + ": " + e.getMessage());
-            
+            // In stack trace hoặc xử lý lỗi loading FeeItem cho Payment nếu cần
+            // e.printStackTrace(); 
         }
         payment.setFeeItem(feeItem);
 
@@ -44,7 +45,7 @@ public class PaymentRepositoryImpl extends BaseModel implements PaymentRepositor
     @Override
     public List<Payment> findAll() throws SQLException {
         String sql = "SELECT id, household_id, fee_item_id, amount_paid, payment_date, status, created_at, updated_at FROM payments";
-        try (Connection conn = getConnection(); 
+        try (Connection conn = getConnection(); // getConnection() giờ ném SQLException
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             List<Payment> payments = new ArrayList<>();
