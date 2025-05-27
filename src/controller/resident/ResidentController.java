@@ -2,7 +2,6 @@ package controller.resident;
 
 import entity.resident.Resident;
 import model.resident.ResidentModel;
-import repository.resident.ResidentRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +27,7 @@ public class ResidentController {
             System.out.println("Tên hoặc CCCD không hợp lệ. Không thể thêm cư dân.");
             return false;
         }
-        if (ResidentRepository.getInstance().getResidentByCCCD(cccd) != null) {
+        if (ResidentModel.getInstance().getResidentByCCCD(cccd) != null) {
             System.out.println("Cư dân với CCCD này đã tồn tại.");
             return false;
         }
@@ -51,15 +50,15 @@ public class ResidentController {
 //    }
 
     public Resident getResidentByCccd(String cccd) {
-        return ResidentRepository.getInstance().getResidentByCCCD(cccd);
+        return ResidentModel.getInstance().getResidentByCCCD(cccd);
     }
 
     public List<Resident> searchResidentsByName(String name) {
-        return ResidentRepository.getInstance().getResidentsByName(name);
+        return ResidentModel.getInstance().getResidentsByName(name);
     }
 
     public List<Resident> getAllResidents() {
-        return ResidentRepository.getInstance().getAllResidents();
+        return ResidentModel.getInstance().getAllResidents();
     }
 
     // UPDATE
@@ -67,7 +66,7 @@ public class ResidentController {
                                String ethnicity, String religion, String occupation,
                                Date issueDate, String issuePlace, int householdId) {
 
-        Resident resident = ResidentRepository.getInstance().getResidentByCCCD(cccd);
+        Resident resident = ResidentModel.getInstance().getResidentByCCCD(cccd);
         if (resident == null) {
             System.out.println("Không tìm thấy cư dân có CCCD: " + cccd);
             return false;
@@ -82,18 +81,25 @@ public class ResidentController {
         if (issueDate != null) resident.setIssueDate(issueDate);
         if (issuePlace != null && !issuePlace.isBlank()) resident.setIssuePlace(issuePlace);
         if (householdId > 0) resident.setHouseholdId(householdId);
-        return ResidentModel.getInstance().updateResident(resident);
+
+//        boolean success = ResidentModel.getInstance().updateResidentByCCCD(resident);
+//        if (success) {
+//            System.out.println("Cập nhật cư dân thành công.");
+//        } else {
+//            System.out.println("Cập nhật thất bại.");
+//        }
+        return resident.updateToDatabase();
     }
 
     // DELETE
     public boolean removeResidentByCccd(String cccd) {
-        Resident resident = ResidentRepository.getInstance().getResidentByCCCD(cccd);
+        Resident resident = ResidentModel.getInstance().getResidentByCCCD(cccd);
         if (resident == null) {
             System.out.println("Không tìm thấy cư dân với CCCD: " + cccd);
             return false;
         }
 
-        boolean success = ResidentModel.getInstance().deleteResident(resident);
+        boolean success = resident.delete();
         if (success) {
             System.out.println("Xóa cư dân thành công.");
         } else {
