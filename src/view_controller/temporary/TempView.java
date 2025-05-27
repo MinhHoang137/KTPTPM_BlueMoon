@@ -32,7 +32,7 @@ public class TempView extends BaseView {
     private TempController controller = TempController.getInstance();
     @Override
     public String getFxmlPath() {
-        return "/temporary/tempView.fxml";
+        return "/view/temporary/tempView.fxml";
     }
 
     @Override
