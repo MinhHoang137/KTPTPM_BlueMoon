@@ -30,4 +30,10 @@ module itss.ktpm_bluemoon {
     opens controller.fee to javafx.fxml;
     exports controller.fee;
     opens view_controller.fee to javafx.fxml;
+    opens view_controller.temporary to javafx.fxml;
+    exports view_controller.temporary;
+    opens controller.temporary to javafx.base;
+    exports controller.temporary;
+    opens entity.temporary to javafx.base;
+    exports entity.temporary;
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view_controller.temporary.TempView"
+            prefHeight="500.0" prefWidth="900.0">
+
+    <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+
+        <!-- Thanh tìm kiếm -->
+        <HBox spacing="10">
+            <Label text="Căn cước công dân:"/>
+            <TextField fx:id="citizenIdField" promptText="Nhập số CCCD" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="searchButton" text="Tìm" onAction="#onSearch"/>
+        </HBox>
+
+        <!-- Bảng hiển thị dữ liệu -->
+        <TableView fx:id="tempTable" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colPersonId" text="Mã Người" prefWidth="80"/>
+                <TableColumn fx:id="colType" text="Loại" prefWidth="100"/>
+                <TableColumn fx:id="colStart" text="Bắt đầu" prefWidth="100"/>
+                <TableColumn fx:id="colEnd" text="Kết thúc" prefWidth="100"/>
+                <TableColumn fx:id="colAddress" text="Địa chỉ" prefWidth="200"/>
+                <TableColumn fx:id="colReason" text="Lý do" prefWidth="200"/>
+            </columns>
+        </TableView>
+
+        <!-- Các nút thao tác -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="addButton" text="Thêm" onAction="#onAdd"/>
+            <Button fx:id="editButton" text="Sửa" onAction="#onEdit"/>
+            <Button fx:id="deleteButton" text="Xóa" onAction="#onDelete"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
+
