@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view_controller.resident.ResidentView"
+            prefHeight="500.0" prefWidth="700.0">
+
+    <!-- Thanh tìm kiếm -->
+    <HBox spacing="10" layoutX="10" layoutY="10">
+        <TextField fx:id="txtSearch" promptText="Nhập tên hoặc CCCD..." prefWidth="250"/>
+        <Button text="Tìm theo tên" onAction="#onSearchByName"/>
+        <Button text="Tìm theo CCCD" onAction="#onSearchByCCCD"/>
+    </HBox>
+
+    <!-- Bảng dữ liệu cư dân -->
+    <TableView fx:id="tableResidents" layoutX="10" layoutY="50" prefWidth="680" prefHeight="380">
+        <columns>
+            <TableColumn fx:id="colHoTen" text="Họ và tên" prefWidth="120"/>
+            <TableColumn fx:id="colNgaySinh" text="Ngày sinh" prefWidth="90"/>
+            <TableColumn fx:id="colGioiTinh" text="Giới tính" prefWidth="70"/>
+            <TableColumn fx:id="colDanToc" text="Dân tộc" prefWidth="80"/>
+            <TableColumn fx:id="colTonGiao" text="Tôn giáo" prefWidth="80"/>
+            <TableColumn fx:id="colCMND" text="Số CMND/CCCD" prefWidth="100"/>
+            <TableColumn fx:id="colNgheNghiep" text="Nghề nghiệp" prefWidth="100"/>
+            <TableColumn fx:id="colNgayCap" text="Ngày cấp" prefWidth="90"/>
+            <TableColumn fx:id="colNoiCap" text="Nơi cấp" prefWidth="100"/>
+            <TableColumn fx:id="colID" text="Mã cá nhân" prefWidth="80"/>
+            <TableColumn fx:id="colHoKhauID" text="Mã hộ khẩu" prefWidth="80"/>
+        </columns>
+    </TableView>
+
+    <!-- Hàng nút chức năng -->
+    <HBox spacing="10" layoutX="10" layoutY="440">
+        <Button text="Thêm cư dân" onAction="#onAddResident"/>
+        <Button text="Cập nhật thông tin cư dân" onAction="#onUpdateResident"/>
+        <Button text="Xóa cư dân" onAction="#onDeleteResident"/>
+    </HBox>
+
+</AnchorPane>

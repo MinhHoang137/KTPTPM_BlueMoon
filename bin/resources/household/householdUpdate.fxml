@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view_controller.household.HouseholdUpdateView"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+        <VBox spacing="15" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+
+            <Label text="Cập nhật hộ khẩu" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <HBox spacing="10">
+                <Label text="Số hộ khẩu:" prefWidth="120"/>
+                <TextField fx:id="tfHouseholdNumber" prefWidth="200"/>
+                <Button fx:id="btnSearch" text="Tìm" onAction="#onSearchByNumber"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Ngày đăng ký:" prefWidth="120"/>
+                <DatePicker fx:id="dpRegistrationDate" prefWidth="300"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Mã chủ hộ:" prefWidth="120"/>
+                <TextField fx:id="tfOwnerId" prefWidth="300"/>
+            </HBox>
+
+            <Button fx:id="btnSave" text="Lưu" onAction="#onSave" prefWidth="100"
+                    style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+        </VBox>
+    </children>
+</AnchorPane>

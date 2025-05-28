@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "HouseholdViewController",
+      "request": "launch",
+      "mainClass": "view_controller.household.HouseholdViewController",
+      "projectName": "test_d37c7087"
+    },
+    {
+      "type": "java",
+      "name": "Run JavaFX App",
+      "request": "launch",
+      "mainClass": "App",
+      "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-17.0.15/lib\" --add-modules javafx.controls,javafx.fxml"
+    }
+  ]
+}
