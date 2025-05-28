@@ -35,7 +35,7 @@ public class UserRegisterController {
 
         // Thêm 2 vai trò cố định vào ComboBox
         roleField.getItems().addAll("Quản trị", "Ban quản lý dân cư");
-        roleField.getSelectionModel().selectFirst(); // Chọn mặc định "admin"
+        roleField.getSelectionModel().selectFirst(); // Chọn mặc định "Quản trị"
     }
 
     @FXML
@@ -59,19 +59,28 @@ public class UserRegisterController {
         if (success) {
             showAlert("Đăng ký thành công người dùng: " + username);
             // Chuyển về giao diện đăng nhập
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/view/user/userLogin.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) usernameField.getScene().getWindow(); // lấy stage hiện tại
-                stage.setScene(new Scene(root));
-                stage.setTitle("Đăng nhập");
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                showAlert("Lỗi khi chuyển sang giao diện đăng nhập.");
-            }
+            switchToLoginView();
         } else {
             showAlert("Đăng ký thất bại.");
+        }
+    }
+
+    @FXML
+    private void onBackClicked() {
+        switchToLoginView();
+    }
+
+    private void switchToLoginView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/view/user/userManage.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) usernameField.getScene().getWindow(); // lấy stage hiện tại
+            stage.setScene(new Scene(root));
+            stage.setTitle("Đăng nhập");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Lỗi khi chuyển sang giao diện đăng nhập.");
         }
     }
 
