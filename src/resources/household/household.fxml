@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view_controller.household.HouseholdView"
+            prefHeight="500.0" prefWidth="700.0"
+            style="-fx-background-color: #f9f9f9;">
+
+    <VBox spacing="16" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- Tiêu đề -->
+        <Label text="Danh sách hộ khẩu" textFill="#2c3e50"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;">
+            <font>
+                <Font size="20"/>
+            </font>
+        </Label>
+
+        <!-- Thanh tìm kiếm -->
+        <HBox spacing="10">
+            <TextField fx:id="tfSearch" promptText="Nhập mã hoặc số hộ khẩu" HBox.hgrow="ALWAYS"
+                       style="-fx-background-color: #ecf0f1;"/>
+            <Button fx:id="btnSearchById" text="Tìm theo Mã Hộ khẩu" onAction="#onSearchById"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;"/>
+            <Button fx:id="btnSearchByNumber" text="Tìm theo Số Hộ khẩu" onAction="#onSearchByNumber"
+                    style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-background-radius: 5;"/>
+        </HBox>
+
+        <!-- Bảng dữ liệu hộ khẩu -->
+        <TableView fx:id="householdTable" prefHeight="350" VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: white; -fx-border-color: #dcdcdc; -fx-border-radius: 5; -fx-background-radius: 5;">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colHouseholdNumber" text="Số hộ khẩu" prefWidth="120"/>
+                <TableColumn fx:id="colRegistrationDate" text="Ngày lập hộ khẩu" prefWidth="150"/>
+                <TableColumn fx:id="colOwnerId" text="ID Chủ hộ" prefWidth="100"/>
+                <!-- <TableColumn fx:id="colOwnerName" text="Họ tên Chủ hộ" prefWidth="180"/> -->
+            </columns>
+        </TableView>
+
+        <!-- Các nút thao tác -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="btnAdd" text="➕ Thêm" onAction="#onAdd"
+                    style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5;"/>
+            <Button fx:id="btnUpdate" text="📝 Cập nhật" onAction="#onUpdate"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 5;"/>
+            <Button fx:id="btnDelete" text="🗑 Xóa" onAction="#onDelete"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5;"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>
