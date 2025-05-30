@@ -8,19 +8,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRegisterRepositoryImpl extends BaseModel implements UserRegisterRepository {
+    private final String TABLE_NAME = "users";
 
     private User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getInt("userid"));
+        user.setId(rs.getInt("id"));
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password"));
-        user.setRole(rs.getString("vaitro")); // dùng getRole/setRole trong Java object
+        user.setRole(rs.getString("role"));
         return user;
     }
 
     @Override
     public boolean save(User user) {
-        String sql = "INSERT INTO user (username, password, vaitro) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO " + TABLE_NAME + " (username, password, role) VALUES (?, ?, ?)";
 
         try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -40,7 +41,7 @@ public class UserRegisterRepositoryImpl extends BaseModel implements UserRegiste
 
     @Override
     public Optional<User> findByUsername(String username) {
-        String sql = "SELECT * FROM user WHERE username = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
 
         try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -61,7 +62,7 @@ public class UserRegisterRepositoryImpl extends BaseModel implements UserRegiste
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM " + TABLE_NAME + "";
 
         try (Connection conn = getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
@@ -69,10 +70,10 @@ public class UserRegisterRepositoryImpl extends BaseModel implements UserRegiste
 
             while (rs.next()) {
                 users.add(new User(
-                        rs.getInt("userid"),
+                        rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("vaitro")));
+                        rs.getString("role")));
             }
 
         } catch (SQLException e) {

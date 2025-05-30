@@ -4,40 +4,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.layout.VBox?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view_controller.resident.ResidentView"
-            prefHeight="500.0" prefWidth="700.0">
+            prefHeight="500.0" prefWidth="700.0"
+            style="-fx-background-color: #f4f4f4;">
 
-    <!-- Thanh tìm kiếm -->
-    <HBox spacing="10" layoutX="10" layoutY="10">
-        <TextField fx:id="txtSearch" promptText="Nhập tên hoặc CCCD..." prefWidth="250"/>
-        <Button text="Tìm theo tên" onAction="#onSearchByName"/>
-        <Button text="Tìm theo CCCD" onAction="#onSearchByCCCD"/>
-    </HBox>
+    <VBox spacing="15" layoutX="10" layoutY="10" prefWidth="680">
 
-    <!-- Bảng dữ liệu cư dân -->
-    <TableView fx:id="tableResidents" layoutX="10" layoutY="50" prefWidth="680" prefHeight="380">
-        <columns>
-            <TableColumn fx:id="colHoTen" text="Họ và tên" prefWidth="120"/>
-            <TableColumn fx:id="colNgaySinh" text="Ngày sinh" prefWidth="90"/>
-            <TableColumn fx:id="colGioiTinh" text="Giới tính" prefWidth="70"/>
-            <TableColumn fx:id="colDanToc" text="Dân tộc" prefWidth="80"/>
-            <TableColumn fx:id="colTonGiao" text="Tôn giáo" prefWidth="80"/>
-            <TableColumn fx:id="colCMND" text="Số CMND/CCCD" prefWidth="100"/>
-            <TableColumn fx:id="colNgheNghiep" text="Nghề nghiệp" prefWidth="100"/>
-            <TableColumn fx:id="colNgayCap" text="Ngày cấp" prefWidth="90"/>
-            <TableColumn fx:id="colNoiCap" text="Nơi cấp" prefWidth="100"/>
-            <TableColumn fx:id="colID" text="Mã cá nhân" prefWidth="80"/>
-            <TableColumn fx:id="colHoKhauID" text="Mã hộ khẩu" prefWidth="80"/>
-        </columns>
-    </TableView>
+        <!-- Thanh tìm kiếm -->
+        <HBox spacing="10">
+            <TextField fx:id="txtSearch" promptText="Nhập tên hoặc CCCD..." prefWidth="250"
+                       style="-fx-background-radius: 20; -fx-padding: 5 10;"/>
+            <Button text="Tìm theo tên" onAction="#onSearchByName"/>
+            <Button text="Tìm theo CCCD" onAction="#onSearchByCCCD"/>
+        </HBox>
 
-    <!-- Hàng nút chức năng -->
-    <HBox spacing="10" layoutX="10" layoutY="440">
-        <Button text="Thêm cư dân" onAction="#onAddResident"/>
-        <Button text="Cập nhật thông tin cư dân" onAction="#onUpdateResident"/>
-        <Button text="Xóa cư dân" onAction="#onDeleteResident"/>
-    </HBox>
+        <!-- Bảng dữ liệu cư dân -->
+        <TableView fx:id="tableResidents" prefHeight="380"
+                   style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 2, 2);">
+            <columns>
+                <TableColumn fx:id="colHoTen" text="Họ và tên" prefWidth="120"/>
+                <TableColumn fx:id="colNgaySinh" text="Ngày sinh" prefWidth="90"/>
+                <TableColumn fx:id="colGioiTinh" text="Giới tính" prefWidth="70"/>
+                <TableColumn fx:id="colDanToc" text="Dân tộc" prefWidth="80"/>
+                <TableColumn fx:id="colTonGiao" text="Tôn giáo" prefWidth="80"/>
+                <TableColumn fx:id="colCMND" text="Số CMND/CCCD" prefWidth="100"/>
+                <TableColumn fx:id="colNgheNghiep" text="Nghề nghiệp" prefWidth="100"/>
+                <TableColumn fx:id="colNgayCap" text="Ngày cấp" prefWidth="90"/>
+                <TableColumn fx:id="colNoiCap" text="Nơi cấp" prefWidth="100"/>
+                <TableColumn fx:id="colID" text="Mã cá nhân" prefWidth="80"/>
+                <TableColumn fx:id="colHoKhauID" text="Mã hộ khẩu" prefWidth="80"/>
+            </columns>
+        </TableView>
+
+        <!-- Hàng nút chức năng -->
+        <HBox spacing="10">
+            <Button text="Thêm cư dân" onAction="#onAddResident"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Cập nhật thông tin cư dân" onAction="#onUpdateResident"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            <Button text="Xóa cư dân" onAction="#onDeleteResident"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+        </HBox>
+
+    </VBox>
 
 </AnchorPane>

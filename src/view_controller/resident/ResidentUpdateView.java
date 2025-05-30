@@ -48,7 +48,7 @@ public class ResidentUpdateView extends BaseView {
 
     @FXML
     private void onSearchByCCCD(ActionEvent actionEvent) {
-        // TODO: xử lý tìm kiếm theo CCCD
+
         String cccd = txtCCCD.getText().trim();
         Resident resident = ResidentController.getInstance().getResidentByCccd(cccd);
         if (resident != null) {
@@ -78,7 +78,7 @@ public class ResidentUpdateView extends BaseView {
 
     @FXML
     private void onUpdateResident(ActionEvent actionEvent) {
-        // TODO: xử lý cập nhật thông tin cư dân
+
         String cccd = txtCCCD.getText().trim();
         String name = txtHoTen.getText().trim();
         String gender = txtGioiTinh.getText().trim();
@@ -98,7 +98,7 @@ public class ResidentUpdateView extends BaseView {
         ResidentController.getInstance().updateResident(cccd, name, gender, birthDate,
                 dantoc, tonGiao, occupation, issueDate, issuePlace, householdId);
         NotificationView.Create("Cập nhật cư dân thành công.");
-        ResidentView.getCurrentView().refreshAResident(cccd);
+        ResidentView.getCurrentView().refreshTable();
     }
 
     @Override

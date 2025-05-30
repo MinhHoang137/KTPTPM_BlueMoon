@@ -6,8 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import view_controller.ViewController;
+import view_controller.household.HouseholdView;
+import view_controller.resident.ResidentView;
+import view_controller.temporary.*;
 import java.io.IOException;
+
+import entity.resident.Household;
 
 public class HomePageController {
 
@@ -20,7 +25,7 @@ public class HomePageController {
     }
 
     public void onResidentClicked(ActionEvent event) throws IOException {
-        loadPage("/resources/resident/resident.fxml", event);
+        ViewController.getInstance().openView(new ResidentView(), "Danh sách dân cư", 700, 600);
     }
 
     public void onLogoutClicked(ActionEvent event) throws IOException {
@@ -30,7 +35,12 @@ public class HomePageController {
 
     public void onHouseHoldClicked(ActionEvent event) throws IOException {
 
-        loadPage("/resources/household/household.fxml", event);
+        ViewController.getInstance().openView(new HouseholdView(), "Danh sách hộ khẩu", 700, 600);
+    }
+
+    public void onTemporaryClicked(ActionEvent event) throws IOException {
+
+        ViewController.getInstance().openView(new TempView(), "Tạm trú tạm vắng", 700, 600);
     }
 
     private void loadPage(String fxmlPath, ActionEvent event) throws IOException {

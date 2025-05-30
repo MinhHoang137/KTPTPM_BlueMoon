@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import view_controller.BaseView;
 import view_controller.ViewController;
+import view_controller.notification.NotificationView;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -67,9 +68,8 @@ public class HouseholdView extends BaseView {
     private void onSearchById(ActionEvent e) throws SQLException {
         String idText = tfSearch.getText().trim();
         if (idText.isEmpty()) {
-            List<Household> households = HouseholdController.getInstance().getAllHouseholds();
-            ObservableList<Household> data = FXCollections.observableArrayList(households);
-            householdTable.setItems(data);
+            NotificationView.Create("Vui lòng nhập mã hộ khẩu hoặc số hộ khẩu!");
+            refreshTable();
             return;
         }
         int id = Integer.parseInt(idText);
@@ -90,6 +90,8 @@ public class HouseholdView extends BaseView {
     private void onSearchByNumber(ActionEvent e) {
         String householdNumber = tfSearch.getText().trim();
         if (householdNumber.isEmpty()) {
+            NotificationView.Create("Vui lòng nhập mã hộ khẩu hoặc số hộ khẩu!");
+            refreshTable();
             return;
         }
         try {
@@ -107,7 +109,7 @@ public class HouseholdView extends BaseView {
 
     @FXML
     private void onAdd(ActionEvent e) {
-        ViewController.getInstance().openView(new HouseholdAddView(), "Thêm hộ gia đình", 1000, 700);
+        ViewController.getInstance().openView(new HouseholdAddView(), "Thêm hộ gia đình", 700, 700);
     }
 
     @FXML
@@ -117,7 +119,7 @@ public class HouseholdView extends BaseView {
 
     @FXML
     private void onDelete(ActionEvent e) {
-        ViewController.getInstance().openView(new HouseholdDeleteView(), "Xóa hộ gia đình", 1000, 700);
+        ViewController.getInstance().openView(new HouseholdDeleteView(), "Xóa hộ gia đình", 700, 700);
     }
 
     public void refreshTable() {

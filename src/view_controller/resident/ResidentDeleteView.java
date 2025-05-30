@@ -18,7 +18,7 @@ public class ResidentDeleteView extends BaseView {
     private void onDeleteClick(ActionEvent actionEvent) {
         String cccd = txtCCCD.getText().trim();
         if (cccd.isEmpty()) {
-            // Hiển thị thông báo lỗi nếu không nhập CCCD
+
             NotificationView.Create("Vui lòng nhập CCCD để xóa cư dân!");
             return;
         }

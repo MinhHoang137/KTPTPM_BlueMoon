@@ -2,71 +2,76 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view_controller.resident.ResidentAddView"
-            prefHeight="500.0" prefWidth="600.0">
+            prefHeight="520.0" prefWidth="640.0"
+            style="-fx-background-color: #f0f8ff;"> <!-- nền xanh nhạt -->
 
-    <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
 
         <!-- Tiêu đề -->
-        <Label text="Thêm Dân Cư" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <Label text="Thêm Dân Cư" textFill="#2c3e50" style="-fx-font-weight: bold;">
+            <font>
+                <Font size="24"/>
+            </font>
+            <VBox.margin>
+                <Insets bottom="10"/>
+            </VBox.margin>
+        </Label>
 
-        <!-- Form nhập liệu thông tin cư dân -->
-        <GridPane hgap="10" vgap="10">
-            <columnConstraints>
-                <ColumnConstraints minWidth="120" />
-                <ColumnConstraints minWidth="300" />
-            </columnConstraints>
+        <!-- Khung form -->
+        <VBox spacing="15" style="-fx-background-color: #ffffff; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-padding: 20; -fx-background-radius: 8; -fx-border-radius: 8;">
 
-            <!-- Họ tên -->
-            <Label text="Họ và tên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtHoTen" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <GridPane hgap="15" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="130"/>
+                    <ColumnConstraints minWidth="350"/>
+                </columnConstraints>
 
-            <!-- Giới tính -->
-            <Label text="Giới tính:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtGioiTinh" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <!-- Các trường thông tin -->
+                <Label text="Họ và tên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtHoTen" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- Ngày sinh -->
-            <Label text="Ngày sinh:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="dateNgaySinh" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Giới tính:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtGioiTinh" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- Dân tộc -->
-            <Label text="Dân tộc:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtDanToc" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Ngày sinh:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dateNgaySinh" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-            <!-- Tôn giáo -->
-            <Label text="Tôn giáo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtTonGiao" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label text="Dân tộc:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDanToc" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- CCCD -->
-            <Label text="CMND/CCCD:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtCCCD" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="Tôn giáo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTonGiao" GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- Nghề nghiệp -->
-            <Label text="Nghề nghiệp:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtNgheNghiep" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <Label text="CMND/CCCD:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCCCD" GridPane.rowIndex="5" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- Ngày cấp -->
-            <Label text="Ngày cấp:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="dateNgayCap" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                <Label text="Nghề nghiệp:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNgheNghiep" GridPane.rowIndex="6" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-            <!-- Nơi cấp -->
-            <Label text="Nơi cấp:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtNoiCap" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                <Label text="Ngày cấp:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dateNgayCap" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
-            <!-- Mã hộ khẩu -->
-            <Label text="Mã hộ khẩu:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtMaHoKhau" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-        </GridPane>
+                <Label text="Nơi cấp:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNoiCap" GridPane.rowIndex="8" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
 
-        <!-- Nút thêm -->
-        <HBox alignment="CENTER_RIGHT">
-            <Button text="Thêm" onAction="#onAddClick"/>
-        </HBox>
+                <Label text="Mã hộ khẩu:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtMaHoKhau" GridPane.rowIndex="9" GridPane.columnIndex="1" style="-fx-background-color: #ecf0f1;"/>
+            </GridPane>
 
+            <!-- Nút thêm -->
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="➕ Thêm" onAction="#onAddClick" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 16;">
+                    <HBox.margin>
+                        <Insets top="10"/>
+                    </HBox.margin>
+                </Button>
+            </HBox>
+        </VBox>
     </VBox>
-
 </AnchorPane>

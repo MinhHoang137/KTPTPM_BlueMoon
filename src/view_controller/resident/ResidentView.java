@@ -13,7 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import view_controller.BaseView;
 import view_controller.ViewController;
-
+import view_controller.notification.NotificationView;
+import view_controller.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -72,9 +73,12 @@ public class ResidentView extends BaseView {
     private void onSearchByName() {
         String keyword = txtSearch.getText().trim();
         if (!keyword.isEmpty()) {
-            // Tìm kiếm danh sách cư dân theo tên → hiển thị trên bảng
+
             List<Resident> result = ResidentController.getInstance().searchResidentsByName(keyword);
             tableResidents.setItems(FXCollections.observableArrayList(result));
+        } else {
+            NotificationView.Create("vui long nhap ten hoac CCCD:");
+            refreshTable();
         }
     }
 
@@ -86,24 +90,27 @@ public class ResidentView extends BaseView {
             if (r != null) {
                 tableResidents.setItems(FXCollections.observableArrayList(r));
             } else {
-                tableResidents.setItems(FXCollections.observableArrayList()); // Trống nếu không tìm thấy
+                tableResidents.setItems(FXCollections.observableArrayList());
             }
+        } else {
+            NotificationView.Create("vui long nhap ten hoac CCCD:");
+            refreshTable();
         }
     }
 
     @FXML
     private void onAddResident(ActionEvent actionEvent) {
-        ViewController.getInstance().openView(new ResidentAddView(), "Thêm cư dân", 1000, 700);
+        ViewController.getInstance().openView(new ResidentAddView(), "Thêm cư dân", 700, 600);
     }
 
     @FXML
     private void onUpdateResident(ActionEvent actionEvent) {
-        ViewController.getInstance().openView(new ResidentUpdateView(), "Cập nhật cư dân", 1000, 700);
+        ViewController.getInstance().openView(new ResidentUpdateView(), "Cập nhật cư dân", 700, 600);
     }
 
     @FXML
     private void onDeleteResident(ActionEvent actionEvent) {
-        ViewController.getInstance().openView(new ResidentDeleteView(), "Xóa cư dân", 1000, 700);
+        ViewController.getInstance().openView(new ResidentDeleteView(), "Xóa cư dân", 600, 400);
     }
 
     @Override
