@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="view_controller.temporary.TempView"
+            prefHeight="500.0" prefWidth="900.0"
+            style="-fx-background-color: #f4f4f4;">
+
+    <VBox spacing="15" AnchorPane.topAnchor="15" AnchorPane.leftAnchor="15"
+          AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="15">
+
+        <!-- Thanh tìm kiếm -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Căn cước công dân:"
+                   style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <TextField fx:id="citizenIdField" promptText="Nhập số CCCD"
+                       HBox.hgrow="ALWAYS"
+                       style="-fx-background-radius: 8; -fx-padding: 6;"/>
+            <Button fx:id="searchButton" text="Tìm" onAction="#onSearch"
+                    style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-background-radius: 8;"/>
+        </HBox>
+
+        <!-- Bảng hiển thị dữ liệu -->
+        <TableView fx:id="tempTable" prefHeight="400"
+                   style="-fx-background-color: white; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <columns>
+                <TableColumn fx:id="colId" text="Mã tạm trú/tạm vắng" prefWidth="50"/>
+                <TableColumn fx:id="citizenId" text="CCCD"/>
+                <TableColumn fx:id="colType" text="Loại" prefWidth="100"/>
+                <TableColumn fx:id="colStart" text="Bắt đầu" prefWidth="100"/>
+                <TableColumn fx:id="colEnd" text="Kết thúc" prefWidth="100"/>
+                <TableColumn fx:id="colAddress" text="Địa chỉ" prefWidth="200"/>
+                <TableColumn fx:id="colReason" text="Lý do" prefWidth="200"/>
+            </columns>
+        </TableView>
+
+        <!-- Các nút thao tác -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="addButton" text="Thêm" onAction="#onAdd"
+                    style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-background-radius: 8;"/>
+            <Button fx:id="deleteButton" text="Xóa" onAction="#onDelete"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-background-radius: 8;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
