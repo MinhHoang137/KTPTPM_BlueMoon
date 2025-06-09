@@ -22,7 +22,7 @@
                 style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
                        -fx-background-radius: 10;" />
 
-        <Button text="Báo cáo - Thống kê"
+        <Button text="Báo cáo - Thống kê" 
                 onAction="#onReportStatClicked"
                 prefWidth="260" prefHeight="50"
                 style="-fx-background-color: #1ABC9C; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
