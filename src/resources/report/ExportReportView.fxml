@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.report.ExportReportController"
+            prefWidth="800" prefHeight="600">
+
+    <center>
+        <TableView fx:id="tableReport" prefHeight="500" prefWidth="1240" BorderPane.alignment="CENTER">
+    <columns>
+        <TableColumn text="Họ và tên" fx:id="colFullName" prefWidth="150"/>
+        <TableColumn text="Giới tính" fx:id="colGender" prefWidth="80"/>
+        <TableColumn text="CMND/CCCD" fx:id="colIdentityNumber" prefWidth="120"/>
+        <TableColumn text="Mã hộ khẩu" fx:id="colHouseholdId" prefWidth="100"/>
+        <TableColumn text="Khoản thu" fx:id="colTenKhoanThu" prefWidth="150"/>
+        <TableColumn text="Số tiền (VNĐ)" fx:id="colSoTien" prefWidth="120"/>
+        <TableColumn text="Trạng thái khoản thu" fx:id="colTrangThaiKhoanThu" prefWidth="130"/>
+        <TableColumn text="Số tiền nộp (VNĐ)" fx:id="colSoTienNop" prefWidth="120"/>
+        <TableColumn text="Ngày nộp" fx:id="colNgayNop" prefWidth="130"/>
+        <TableColumn text="Trạng thái thanh toán" fx:id="colTrangThaiThanhToan" prefWidth="140"/>
+    </columns>
+</TableView>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" BorderPane.alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Lưu báo cáo" fx:id="btnSaveReport" minWidth="100"/>
+        </HBox>
+    </bottom>
+</BorderPane>

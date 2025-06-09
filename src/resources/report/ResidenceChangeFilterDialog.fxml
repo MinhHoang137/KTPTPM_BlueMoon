@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="your.package.ResidenceChangeFilterDialogController"
+      spacing="10" alignment="TOP_LEFT">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="Bộ lọc thống kê tăng/giảm" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Ngày bắt đầu:"/>
+        <DatePicker fx:id="startDatePicker"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Ngày kết thúc:"/>
+        <DatePicker fx:id="endDatePicker"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Loại tăng/giảm:"/>
+        <ComboBox fx:id="changeTypeComboBox" prefWidth="150"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <CheckBox fx:id="filterMoneyCheckBox" text="Lọc theo tiền"/>
+        <CheckBox fx:id="filterPopulationCheckBox" text="Lọc theo dân cư"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="OK" onAction="#handleOk"/>
+        <Button text="Hủy" onAction="#handleCancel"/>
+    </HBox>
+
+</VBox>

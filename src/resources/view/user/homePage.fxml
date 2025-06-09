@@ -39,6 +39,12 @@
                 prefWidth="260" prefHeight="50"
                 style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
                        -fx-background-radius: 10;" />
+        <Button text="Xe cộ"
+        onAction="#onVehicleClicked"
+        prefWidth="260" prefHeight="50"
+        style="-fx-background-color: #F1C40F; -fx-text-fill: black; -fx-font-size: 15px; -fx-font-weight: bold;
+               -fx-background-radius: 10;" />
+
 
         <Button text="Tạm trú / Tạm vắng"
                 onAction="#onTemporaryClicked"

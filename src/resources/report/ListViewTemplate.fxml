@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.report.ListUserController">
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <Label text="Danh sách tài khoản người dùng" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <TableView fx:id="tableView" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colUsername" text="Tên đăng nhập" prefWidth="200" />
+                    <TableColumn fx:id="colRole" text="Vai trò" prefWidth="150" />
+                    <TableColumn fx:id="colCreatedAt" text="Ngày tạo" prefWidth="180" />
+                </columns>
+            </TableView>
+        </VBox>
+    </children>
+</AnchorPane>

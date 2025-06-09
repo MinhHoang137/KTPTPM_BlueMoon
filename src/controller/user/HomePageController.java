@@ -43,6 +43,11 @@ public class HomePageController {
         ViewController.getInstance().openView(new TempView(), "Tạm trú tạm vắng", 700, 600);
     }
 
+    public void onVehicleClicked(ActionEvent event) throws IOException {
+
+        loadPage("/resources/vehicle/VehicleList.fxml", event);
+    }
+
     private void loadPage(String fxmlPath, ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
