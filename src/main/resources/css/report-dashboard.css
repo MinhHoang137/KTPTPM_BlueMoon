@@ -1,0 +1,29 @@
+/* report-dashboard.css */
+
+/* Make the StackPane background slightly translucent */
+.root {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);
+}
+
+/* Style the VBox that holds the buttons */
+.vbox {
+    -fx-alignment: center;
+}
+
+/* Style each button to have a consistent look */
+.button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #3A7CA5;
+    -fx-text-fill: white;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.button:hover {
+    -fx-background-color: #2E5D7E;
+}

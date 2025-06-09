@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.report.ReportDashboardController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #f0f4f7;">
+    <VBox spacing="20" alignment="CENTER">
+        <Label text="Báo cáo - Thống kê" style="-fx-font-size: 24px; -fx-text-fill: #333333;"/>
+        <HBox spacing="50" alignment="CENTER">
+            <Button text="Báo cáo" fx:id="reportBtn" prefWidth="200" prefHeight="50"
+                    onAction="#onReportBtnClicked"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px;"/>
+            <Button text="Thống kê" fx:id="statsBtn" prefWidth="200" prefHeight="50"
+                    onAction="#onStatsBtnClicked"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 16px;"/>
+        </HBox>
+    </VBox>
+</StackPane>

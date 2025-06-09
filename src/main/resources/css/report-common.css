@@ -1,0 +1,47 @@
+/* report-common.css */
+
+/* Base styling for any StackPane used as a report container */
+.root {
+    -fx-background-color: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 3);
+}
+
+/* Top HBox containing controls (ComboBox, Buttons) */
+.hbox {
+    -fx-alignment: center-left;
+}
+
+/* Style for Labels in the top bar */
+.label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Style for ComboBox in report/statistic windows */
+.combo-box {
+    -fx-font-size: 13px;
+    -fx-pref-height: 28;
+    -fx-pref-width: 200;
+}
+
+/* Style for Chart container to have padding */
+.stack-pane {
+    -fx-padding: 20;
+}
+
+/* Style for buttons (Export, Close) */
+.button {
+    -fx-font-size: 13px;
+    -fx-background-color: #5A5A5A;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-padding: 6 12 6 12;
+    -fx-cursor: hand;
+}
+.button:hover {
+    -fx-background-color: #3F3F3F;
+}

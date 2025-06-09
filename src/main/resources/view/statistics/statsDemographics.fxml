@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.statistics.DemographicsController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #FFFFFF;">
+    <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+        <Label text="Thống kê Nhân khẩu" style="-fx-font-size: 20px; -fx-text-fill: #333333;"/>
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Giới tính" fx:id="genderBtn" prefWidth="120" prefHeight="30"
+                    style="-fx-background-color: #E91E63; -fx-text-fill: white;"/>
+            <Button text="Tuổi" fx:id="ageBtn" prefWidth="120" prefHeight="30"
+                    style="-fx-background-color: #9C27B0; -fx-text-fill: white;"/>
+            <Button text="Tôn giáo" fx:id="religionBtn" prefWidth="120" prefHeight="30"
+                    style="-fx-background-color: #3F51B5; -fx-text-fill: white;"/>
+        </HBox>
+        <Pane fx:id="chartPane" prefWidth="960" prefHeight="600" />
+    </VBox>
+</StackPane>

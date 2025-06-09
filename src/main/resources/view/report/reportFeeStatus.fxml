@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.report.ReportFeeStatusController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #ffffff;">
+    <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+        <Label text="Trạng thái Thu Phí" style="-fx-font-size: 20px; -fx-text-fill: #333333;"/>
+        <HBox spacing="30" alignment="CENTER">
+            <Button text="Đã nộp" fx:id="paidBtn" prefWidth="150" prefHeight="30"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Chưa nộp" fx:id="unpaidBtn" prefWidth="150" prefHeight="30"
+                    style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+        </HBox>
+        <TableView fx:id="statusTable" prefWidth="960" prefHeight="580">
+            <columns>
+                <TableColumn fx:id="statusCol" text="Trạng thái" prefWidth="150"/>
+                <TableColumn fx:id="householdCol" text="Hộ gia đình" prefWidth="350"/>
+            </columns>
+        </TableView>
+    </VBox>
+</StackPane>
