@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="350" prefWidth="600" spacing="0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.UserRegisterController">
+
+    <!-- Phần trái: Logo + mô tả -->
+    <VBox alignment="CENTER" prefWidth="300" style="-fx-background-color: #1D2429;">
+        <ImageView fx:id="registerImage" fitHeight="228.0" fitWidth="186.0" preserveRatio="true">
+            <image>
+                <Image url="@image/blue-moon.png" />
+            </image>
+        </ImageView>
+
+        <Label style="-fx-text-fill: white; -fx-font-size: 10px; -fx-padding: 10 0 0 0;" />
+    </VBox>
+
+    <!-- Phần phải: Form đăng ký -->
+    <VBox alignment="CENTER_LEFT" prefWidth="300" spacing="15" style="-fx-background-color: #555555;">
+        <padding>
+            <Insets bottom="30" left="30" right="30" top="30" />
+        </padding>
+
+        <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Đăng ký" />
+
+        <VBox spacing="10">
+
+            <Label style="-fx-text-fill: white;" text="Tên đăng nhập:" />
+            <TextField fx:id="usernameField" prefWidth="200" />
+
+            <Label style="-fx-text-fill: white;" text="Mật khẩu:" />
+            <PasswordField fx:id="passwordField" prefWidth="200" />
+
+            <Label style="-fx-text-fill: white;" text="Vai trò:" />
+            <ComboBox fx:id="roleField" prefWidth="200" />
+        </VBox>
+
+        <HBox alignment="CENTER" spacing="15">
+            <Button fx:id="backButton" onAction="#onBackClicked" prefWidth="90" style="-fx-background-color: white; -fx-text-fill: black;" text="Quay lại" />
+            <Button fx:id="registerButton" onAction="#onRegisterClicked" prefWidth="90" style="-fx-background-color: white; -fx-text-fill: black;" text="Đăng ký" />
+        </HBox>
+    </VBox>
+</HBox>

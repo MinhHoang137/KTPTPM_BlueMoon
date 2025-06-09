@@ -2,6 +2,10 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+=======
+    <file url="file://$PROJECT_DIR$/src/resources" charset="UTF-8" />
+>>>>>>> 40dec95881614479633d2453fa293b8a0bba78d9
   </component>
 </project>

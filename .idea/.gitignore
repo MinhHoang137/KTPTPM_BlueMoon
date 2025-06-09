@@ -1,6 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+<<<<<<< HEAD
 # Editor-based HTTP Client requests
 /httpRequests/
 # Environment-dependent path to Maven home directory
@@ -8,3 +9,5 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+=======
+>>>>>>> 40dec95881614479633d2453fa293b8a0bba78d9
