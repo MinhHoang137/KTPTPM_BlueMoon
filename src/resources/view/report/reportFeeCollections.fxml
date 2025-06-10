@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.lang.String?>
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.report.ReportFeeCollectionsController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #ffffff;">
+    <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+        <Label text="Tổng hợp Thu Phí (Báo cáo)" style="-fx-font-size: 20px; -fx-text-fill: #333333;"/>
+        <HBox spacing="20" alignment="CENTER">
+            <ComboBox fx:id="groupByCombo" prefWidth="200" prefHeight="30">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Khoản thu (fee_name)"/>
+                        <String fx:value="Hộ gia đình"/>
+                        <String fx:value="Thời gian"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Button text="Hiển thị" fx:id="showBtn" prefWidth="120" prefHeight="30"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        </HBox>
+        <Pane fx:id="chartPane" prefHeight="600" prefWidth="960" />
+    </VBox>
+</StackPane>

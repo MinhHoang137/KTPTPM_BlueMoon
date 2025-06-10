@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.household.HouseholdUpdateView">
+
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+
+            <spacing>15.0</spacing>
+
+            <children>
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Cập nhật thông tin hộ khẩu" />
+
+                <!-- Số hộ khẩu + Nút Tìm -->
+                <HBox>
+                    <spacing>10.0</spacing>
+                    <children>
+                        <Label prefWidth="120.0" text="Số hộ khẩu:" />
+                        <TextField fx:id="tfHouseholdNumber" prefWidth="200.0" />
+                    </children>
+                </HBox>
+
+                <!-- Số phòng -->
+                <HBox>
+                    <spacing>10.0</spacing>
+                    <children>
+                        <Label prefWidth="120.0" text="Số phòng:" />
+                        <TextField fx:id="tfAddressNumber" prefWidth="300.0" />
+                    </children>
+                </HBox>
+
+                <!-- Ngày đăng ký -->
+                <HBox>
+                    <spacing>10.0</spacing>
+                    <children>
+                        <Label prefWidth="120.0" text="Ngày đăng ký:" />
+                        <DatePicker fx:id="dpRegistrationDate" prefWidth="300.0" />
+                    </children>
+                </HBox>
+
+                <!-- CCCD Chủ hộ -->
+                <HBox>
+                    <spacing>10.0</spacing>
+                    <children>
+                        <Label prefWidth="120.0" text="CCCD chủ hộ:" />
+                        <TextField fx:id="tfOwnerId" prefWidth="300.0" />
+                    </children>
+                </HBox>
+
+                <!-- Nút Lưu -->
+                <HBox>
+                    <spacing>10.0</spacing>
+                    <children>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnSave" onAction="#onSave" prefWidth="100.0" style="-fx-font-size: 14px; -fx-background-color: #4CAF50; -fx-text-fill: white;" text="Lưu" />
+                    </children>
+                </HBox>
+            </children>
+
+        </VBox>
+    </children>
+</AnchorPane>

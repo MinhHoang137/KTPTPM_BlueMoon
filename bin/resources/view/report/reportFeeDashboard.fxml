@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.report.ReportFeeDashboardController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #fcfcfc;">
+    <VBox spacing="20" alignment="CENTER">
+        <Label text="Báo cáo Thu Phí" style="-fx-font-size: 22px; -fx-text-fill: #444444;"/>
+        <HBox spacing="40" alignment="CENTER">
+            <Button text="Báo cáo thu phí" fx:id="feeCollectionBtn" prefWidth="200" prefHeight="50"
+                    onAction="#onFeeCollectionBtnClicked"
+                    style="-fx-background-color: #ff9800; -fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Button text="Trạng thái thu phí" fx:id="feeStatusBtn" prefWidth="200" prefHeight="50"
+                    onAction="#onFeeStatusBtnClicked"
+                    style="-fx-background-color: #9c27b0; -fx-text-fill: white; -fx-font-size: 14px;"/>
+        </HBox>
+    </VBox>
+</StackPane>

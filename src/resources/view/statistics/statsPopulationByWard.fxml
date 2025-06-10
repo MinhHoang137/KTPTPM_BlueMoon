@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.statistics.PopulationByWardController"
+           prefWidth="1000" prefHeight="700"
+           style="-fx-background-color: #FFFFFF;">
+    <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+        <Label text="Nhân khẩu theo Phường" style="-fx-font-size: 20px; -fx-text-fill: #333333;"/>
+        <Pane fx:id="chartPane" prefWidth="960" prefHeight="650" />
+    </VBox>
+</StackPane>
