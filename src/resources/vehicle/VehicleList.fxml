@@ -50,4 +50,10 @@
         </HBox>
 
     </VBox>
+
+    <!-- Nút Quay lại nhỏ ở góc dưới bên phải màn hình -->
+    <Button text="Quay lại" onAction="#onBackClicked" 
+            prefWidth="100" prefHeight="30"
+            style="-fx-background-color: #95A5A6; -fx-text-fill: white; -fx-font-size: 12px; -fx-background-radius: 10; -fx-padding: 5 10;"
+            AnchorPane.bottomAnchor="15" AnchorPane.rightAnchor="15"/>
 </AnchorPane>

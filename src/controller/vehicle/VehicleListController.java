@@ -5,8 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets; // Import Insets
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -302,4 +305,14 @@ public class VehicleListController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    public void onBackClicked() throws IOException {
+        // Logic xử lý chuyển về giao diện trước (Home Page hoặc màn hình trước đó)
+        Stage stage = (Stage) btnAdd.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/user/homePage.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Trang chủ");
+    }
+
 }

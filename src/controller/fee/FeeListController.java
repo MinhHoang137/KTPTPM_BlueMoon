@@ -101,16 +101,18 @@ public class FeeListController {
         TextField tenField = new TextField();
         TextField soTienField = new TextField();
         TextField moTaField = new TextField();
-        TextField ngayBDField = new TextField();
-        TextField ngayKTField = new TextField();
+    
+        // Sử dụng DatePicker cho Ngày bắt đầu và Ngày kết thúc
+        DatePicker ngayBDField = new DatePicker();
+        DatePicker ngayKTField = new DatePicker();
+    
         TextField trangThaiField = new TextField();
 
         grid.add(new Label("Tên khoản thu:"), 0, 0);        grid.add(tenField, 1, 0);
         grid.add(new Label("Số tiền:"), 0, 1);              grid.add(soTienField, 1, 1);
         grid.add(new Label("Mô tả:"), 0, 2);                grid.add(moTaField, 1, 2);
-        grid.add(new Label("Ngày bắt đầu (yyyy-MM-dd):"), 0, 3); grid.add(ngayBDField, 1, 3);
-        grid.add(new Label("Ngày kết thúc (yyyy-MM-dd):"), 0, 4); grid.add(ngayKTField, 1, 4);
-        grid.add(new Label("Trạng thái:"), 0, 5);           grid.add(trangThaiField, 1, 5);
+        grid.add(new Label("Ngày bắt đầu:"), 0, 3);          grid.add(ngayBDField, 1, 3);
+        grid.add(new Label("Ngày kết thúc:"), 0, 4);         grid.add(ngayKTField, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -122,9 +124,14 @@ public class FeeListController {
                     feeItem.setTenKhoanThu(tenField.getText());
                     feeItem.setSoTien(Double.parseDouble(soTienField.getText()));
                     feeItem.setMoTa(moTaField.getText());
-                    feeItem.setNgayBatDau(dateFormat.parse(ngayBDField.getText()));
-                    feeItem.setNgayKetThuc(dateFormat.parse(ngayKTField.getText()));
-                    feeItem.setTrangThai(trangThaiField.getText());
+
+                    // Lấy ngày từ DatePicker và chuyển thành Date
+                    if (ngayBDField.getValue() != null && ngayKTField.getValue() != null) {
+                        feeItem.setNgayBatDau(java.sql.Date.valueOf(ngayBDField.getValue()));
+                        feeItem.setNgayKetThuc(java.sql.Date.valueOf(ngayKTField.getValue()));
+                    }
+
+                    feeItem.setTrangThai("Dang thu");
                     return feeItem;
                 } catch (Exception e) {
                     showAlert("Lỗi nhập liệu: " + e.getMessage());
@@ -140,6 +147,7 @@ public class FeeListController {
             showAlert("Đã thêm khoản thu mới.");
         });
     }
+
 
     @FXML
     public void onEditClicked() {
@@ -245,17 +253,6 @@ public class FeeListController {
             }
         }
 
-        StringBuilder danhSachHo = new StringBuilder();
-        for (int i = 1; i <= tongHo; i++) {
-            double daNop = tongTienTheoHo.getOrDefault(i, 0.0);
-            if (daNop >= soTienThu) {
-                danhSachHo.append("Hộ ").append(i).append(": Đã nộp\n");
-            } else if (daNop > 0) {
-                danhSachHo.append("Hộ ").append(i).append(": Thiếu\n");
-            } else {
-                danhSachHo.append("Hộ ").append(i).append(": Chưa nộp\n");
-            }
-        }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Chi tiết khoản thu");
@@ -263,8 +260,7 @@ public class FeeListController {
         alert.setContentText(
                 "Tổng cần thu: " + tongCanThu + "\n" +
                 "Đã thu: " + daThu + "\n" +
-                "Còn thiếu: " + conThieu + "\n\n" +
-                "Danh sách hộ:\n" + danhSachHo
+                "Còn thiếu: " + conThieu + "\n\n"
         );
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();

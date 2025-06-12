@@ -5,7 +5,20 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.fee.FeeManagerController"
-            prefWidth="400" prefHeight="200">
-    <Button fx:id="btnFee" text="Quản lý Khoản thu" layoutX="100" layoutY="50" onAction="#onFeeClicked"/>
-    <Button fx:id="btnPayment" text="Quản lý Khoản nộp" layoutX="100" layoutY="100" onAction="#onPaymentClicked"/>
+            prefWidth="1000" prefHeight="700" style="-fx-background-color: #f9f9f9;">
+
+    <!-- Centered VBox for Buttons -->
+    <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">
+        
+        <Button fx:id="btnFee" text="Quản lý Khoản thu" onAction="#onFeeClicked"
+                style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 10 20;"/>
+        
+        <Button fx:id="btnPayment" text="Quản lý Khoản nộp" onAction="#onPaymentClicked"
+                style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 10 20;"/>
+        
+        <!-- Button Quay lại -->
+        <Button text="Quay lại" onAction="#onBackClicked"
+                style="-fx-background-color: #9e9e9e; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 10 20;"/>
+    </VBox>
+
 </AnchorPane>

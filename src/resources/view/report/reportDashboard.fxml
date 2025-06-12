@@ -9,6 +9,8 @@
            style="-fx-background-color: #f0f4f7;">
     <VBox spacing="20" alignment="CENTER">
         <Label text="Báo cáo - Thống kê" style="-fx-font-size: 24px; -fx-text-fill: #333333;"/>
+        
+        <!-- Các nút Báo cáo và Thống kê -->
         <HBox spacing="50" alignment="CENTER">
             <Button text="Báo cáo" fx:id="reportBtn" prefWidth="200" prefHeight="50"
                     onAction="#onReportBtnClicked"
@@ -16,6 +18,13 @@
             <Button text="Thống kê" fx:id="statsBtn" prefWidth="200" prefHeight="50"
                     onAction="#onStatsBtnClicked"
                     style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 16px;"/>
+        </HBox>
+
+        <!-- Nút Quay lại căn giữa -->
+        <HBox spacing="10" alignment="CENTER" AnchorPane.topAnchor="50">
+            <Button text="Quay lại" onAction="#onBackClicked" 
+                    prefWidth="200" prefHeight="50"
+                    style="-fx-background-color: #95A5A6; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 10;"/>
         </HBox>
     </VBox>
 </StackPane>

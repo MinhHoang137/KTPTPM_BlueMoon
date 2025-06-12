@@ -41,7 +41,7 @@ public class PaymentListController {
         TableColumn<Payment, Integer> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Payment, Integer> colHo = new TableColumn<>("ID Hộ");
+        TableColumn<Payment, Integer> colHo = new TableColumn<>("Tên hộ");
         colHo.setCellValueFactory(new PropertyValueFactory<>("idHousehold"));
 
         TableColumn<Payment, Double> colSoTien = new TableColumn<>("Số tiền");
@@ -73,15 +73,30 @@ public class PaymentListController {
         dialog.setTitle("Thêm khoản nộp");
 
         GridPane grid = new GridPane();
-        grid.setHgap(10); grid.setVgap(10);
+        grid.setHgap(10);
+        grid.setVgap(10);
 
         TextField idHoField = new TextField();
         TextField soTienField = new TextField();
-        TextField feeIdField = new TextField();
+    
+        // ComboBox để chọn tên khoản thu
+        ComboBox<FeeItem> feeComboBox = new ComboBox<>();
+        ObservableList<FeeItem> feeItems = FXCollections.observableArrayList(new FeeRepositoryImpl().findAll());  // Lấy tất cả khoản thu từ database
+        feeComboBox.setItems(feeItems);
+        feeComboBox.setCellFactory(param -> new ListCell<FeeItem>() {
+            @Override
+            protected void updateItem(FeeItem item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getTenKhoanThu());
+            }
+        });
 
-        grid.add(new Label("ID Hộ:"), 0, 0); grid.add(idHoField, 1, 0);
-        grid.add(new Label("Số tiền:"), 0, 1); grid.add(soTienField, 1, 1);
-        grid.add(new Label("ID Khoản thu:"), 0, 2); grid.add(feeIdField, 1, 2);
+        grid.add(new Label("Tên hộ:"), 0, 0);
+        grid.add(idHoField, 1, 0);
+        grid.add(new Label("Số tiền:"), 0, 1);
+        grid.add(soTienField, 1, 1);
+        grid.add(new Label("Khoản thu:"), 0, 2);
+        grid.add(feeComboBox, 1, 2);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -94,8 +109,14 @@ public class PaymentListController {
                     p.setSoTienNop(Double.parseDouble(soTienField.getText()));
                     p.setNgayNop(new Date());
 
-                    FeeItem f = new FeeRepositoryImpl().findById(Integer.parseInt(feeIdField.getText()));
-                    p.setFeeItem(f);
+                    // Lấy FeeItem từ ComboBox
+                    FeeItem selectedFee = feeComboBox.getSelectionModel().getSelectedItem();
+                    if (selectedFee != null) {
+                        p.setFeeItem(selectedFee);
+                    } else {
+                        showAlert("Vui lòng chọn khoản thu.");
+                        return null;
+                    }
                     return p;
                 } catch (Exception e) {
                     showAlert("Lỗi nhập liệu: " + e.getMessage());
