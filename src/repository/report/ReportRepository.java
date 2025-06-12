@@ -1,7 +1,6 @@
 package repository.report;
 
 import model.BaseModel;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,18 +10,18 @@ public class ReportRepository extends BaseModel {
 
     public Map<String, Double> getTotalCollectedByFeeName() {
         String sql = """
-            SELECT fi.fee_name, 
-                   COALESCE(SUM(p.amount_paid), 0) AS total_collected
-              FROM fee_items fi
-              LEFT JOIN payments p ON p.fee_item_id = fi.id AND p.status = 'Đã nộp'
-             GROUP BY fi.fee_name;
-            """;
+        SELECT fi.ten_khoan_thu, 
+               COALESCE(SUM(p.so_tien_nop), 0) AS total_collected
+          FROM fee_items fi
+          LEFT JOIN payments p ON p.fee_item_id = fi.id AND p.trang_thai = 'Đã nộp'
+         GROUP BY fi.ten_khoan_thu;
+        """;
         Map<String, Double> result = new LinkedHashMap<>();
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                String feeName = rs.getString("fee_name");
+                String feeName = rs.getString("ten_khoan_thu");
                 double total  = rs.getDouble("total_collected");
                 result.put(feeName, total);
             }
@@ -35,9 +34,9 @@ public class ReportRepository extends BaseModel {
     public Map<String, Double> getTotalCollectedByHousehold() {
         String sql = """
             SELECT h.household_registration_number,
-                   COALESCE(SUM(p.amount_paid), 0) AS total_collected
+                   COALESCE(SUM(p.so_tien_nop), 0) AS total_collected
               FROM households h
-              LEFT JOIN payments p ON p.household_id = h.id AND p.status = 'Đã nộp'
+              LEFT JOIN payments p ON p.id_household = h.id AND p.trang_thai = 'Đã nộp'
              GROUP BY h.household_registration_number;
             """;
         Map<String, Double> result = new LinkedHashMap<>();
@@ -57,11 +56,11 @@ public class ReportRepository extends BaseModel {
 
     public Map<String, Double> getTotalCollectedByMonth() {
         String sql = """
-            SELECT DATE_FORMAT(p.payment_date, '%Y-%m') AS month,
-                   COALESCE(SUM(p.amount_paid), 0) AS total_collected
+            SELECT DATE_FORMAT(p.ngay_nop, '%Y-%m') AS month,
+                   COALESCE(SUM(p.so_tien_nop), 0) AS total_collected
               FROM payments p
-             WHERE p.status = 'Đã nộp'
-             GROUP BY DATE_FORMAT(p.payment_date, '%Y-%m')
+             WHERE p.trang_thai = 'Đã nộp'
+             GROUP BY DATE_FORMAT(p.ngay_nop, '%Y-%m')
              ORDER BY month;
             """;
         Map<String, Double> result = new LinkedHashMap<>();
@@ -80,21 +79,21 @@ public class ReportRepository extends BaseModel {
     }
 
     public Map<String, List<String>> getHouseholdPaymentStatusLists() {
-        String sqlPaid       = """
+        String sqlPaid = """
             SELECT DISTINCT h.household_registration_number
               FROM households h
-              JOIN payments p ON p.household_id = h.id
-             WHERE p.status = 'Đã nộp';
+              JOIN payments p ON p.id_household = h.id
+             WHERE p.trang_thai = 'Đã nộp';
             """;
-        String sqlUnpaid     = """
+        String sqlUnpaid = """
             SELECT DISTINCT h.household_registration_number
               FROM households h
-              LEFT JOIN payments p ON p.household_id = h.id
+              LEFT JOIN payments p ON p.id_household = h.id
              GROUP BY h.id
-            HAVING SUM(CASE WHEN p.status = 'Đã nộp' THEN 1 ELSE 0 END) = 0;
+            HAVING SUM(CASE WHEN p.trang_thai = 'Đã nộp' THEN 1 ELSE 0 END) = 0;
             """;
         Map<String, List<String>> result = new LinkedHashMap<>();
-        List<String> paidList   = new ArrayList<>();
+        List<String> paidList = new ArrayList<>();
         List<String> unpaidList = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -134,7 +133,7 @@ public class ReportRepository extends BaseModel {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 String gender = rs.getString("gender");
-                int count     = rs.getInt("cnt");
+                int count = rs.getInt("cnt");
                 result.put(gender, count);
             }
         } catch (Exception ex) {
@@ -143,7 +142,6 @@ public class ReportRepository extends BaseModel {
         return result;
     }
 
-    //Age ranges: 0–18, 19–35, 36–60, >60
     public Map<String, Integer> getPopulationByAgeGroup() {
         String sql = """
             SELECT

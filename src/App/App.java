@@ -1,12 +1,11 @@
+package App;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import view_controller.ViewController;
-import view_controller.household.HouseholdView;
-import view_controller.temporary.TempView;
+
 
 public class App extends Application {
     @Override

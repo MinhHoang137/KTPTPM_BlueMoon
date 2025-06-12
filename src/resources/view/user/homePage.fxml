@@ -1,62 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.user.HomePageController"
-            prefWidth="600" prefHeight="500"
-            style="-fx-background-color: #2C3E50;">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #2C3E50;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.HomePageController">
 
-    <VBox alignment="CENTER" spacing="15" layoutX="150" layoutY="50" prefWidth="300">
+    <VBox alignment="CENTER" layoutX="350.0" layoutY="107.0" prefWidth="300" spacing="15">
 
-        <Label text="Trang chính quản lý"
-               style="-fx-font-size: 22px; -fx-text-fill: #ECF0F1; -fx-font-weight: bold;" />
+        <Label style="-fx-font-size: 22px; -fx-text-fill: #ECF0F1; -fx-font-weight: bold;" text="Trang chính quản lý" />
 
-        <Button text="Khoản thu"
-                onAction="#onFeeClicked"
-                prefWidth="260" prefHeight="50"
-                style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
+        <Button onAction="#onFeeClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Khoản thu" />
 
-        <Button text="Báo cáo"
-                onAction="#onReportClicked"
-                prefWidth="260" prefHeight="50"
-                style="-fx-background-color: #1ABC9C; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
+        <Button onAction="#onReportClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #1ABC9C; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Báo cáo" />
 
-        <Button text="Dân cư"
-                onAction="#onResidentClicked"
-                prefWidth="260" prefHeight="50"
-                style="-fx-background-color: #9B59B6; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
+        <Button onAction="#onResidentClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #9B59B6; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Dân cư" />
 
-        <Button text="Hộ khẩu"
-                onAction="#onHouseHoldClicked"
-                prefWidth="260" prefHeight="50"
-                style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
-        <Button text="Xe cộ"
-        onAction="#onVehicleClicked"
-        prefWidth="260" prefHeight="50"
-        style="-fx-background-color: #F1C40F; -fx-text-fill: black; -fx-font-size: 15px; -fx-font-weight: bold;
-               -fx-background-radius: 10;" />
+        <Button onAction="#onHouseHoldClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Hộ khẩu" />
+        <Button onAction="#onVehicleClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #F1C40F; -fx-text-fill: black; -fx-font-size: 15px; -fx-font-weight: bold;                -fx-background-radius: 10;" text="Xe cộ" />
 
 
-        <Button text="Tạm trú / Tạm vắng"
-                onAction="#onTemporaryClicked"
-                prefWidth="260" prefHeight="50"
-                style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
+        <Button onAction="#onTemporaryClicked" prefHeight="50" prefWidth="260" style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Tạm trú / Tạm vắng" />
 
-        <Button text="Đăng xuất"
-                onAction="#onLogoutClicked"
-                prefWidth="260" prefHeight="45"
-                style="-fx-background-color: #95A5A6; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold;
-                       -fx-background-radius: 10;" />
+        <Button onAction="#onLogoutClicked" prefHeight="45" prefWidth="260" style="-fx-background-color: #95A5A6; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold;                        -fx-background-radius: 10;" text="Đăng xuất" />
     </VBox>
 
 </AnchorPane>
